@@ -53,7 +53,7 @@ const Sidebar = () => {
         <div className="space-y-4 py-4 flex flex-col h-full bg-slate-900 text-white">
              <div className="px-3 py-2 flex-1">
                  <Link href="/dashboard" className="flex items-center mb-14">
-                     <div className="relative w-20 h-20">
+                     <div className="relative w-16 h-16">
                        <Image
                        fill
                        alt='Logo'
