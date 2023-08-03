@@ -16,12 +16,14 @@ const voices = [
         voiceID: "GBv7mTt0atIp3Br8iCZE",
         accent: "American",
         image: "/male1.png",
+        audio: "/americanman1.mp3"
     },
     {
         name: "Rachel",
         voiceID: "21m00Tcm4TlvDq8ikWAM", 
         accent: "American",
         image: "/girl3.png",
+        audio: "/americanwoman1.mp3"
     },
     {
         name: "Clyde",
@@ -80,10 +82,13 @@ const VoicesPage = () => {
                             height={200}
                         />
                         </Link>
-                        <div className="flex flex-row gap-2 mx-auto">
+                        <div className="flex flex-row gap-2 mx-auto mb-6">
                              <h3 className="font-semibold">{voice.name}</h3>
-                             <p>{voice.accent} accent</p>    
-                       </div>
+                             <p>{voice.accent} accent</p>       
+                               </div>
+                                <audio className="self-center" controls>
+                                    <source src={voice.audio} type="audio/mpeg" />
+                                </audio>
                        <p className="mt-2 font-semibold">{voice.description}</p>
                 </div>
                 ))};
