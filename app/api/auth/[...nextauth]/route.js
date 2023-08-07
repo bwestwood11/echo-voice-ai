@@ -11,15 +11,32 @@ export const authOptions = {
         GoogleProvider({
             clientId: process.env.GOOGLE_ID,
             clientSecret: process.env.GOOGLE_SECRET,
+            authorization: {
+                params: {
+                  prompt: "consent",
+                  access_type: "offline",
+                  response_type: "code"
+                }
+            },
         }),
     ],
     callbacks: {
         async session({ session, user, token}) {
+            session.user.id = token.sub;
             return session;
         },
         async jwt({ token, user, account, profile, isNewUser }) {
-
+        console.log("jwt callback token", token);
+        console.log("jwt callback user", user);
+        console.log("jwt callback account", account);
+        console.log("jwt callback profile", profile);
+        console.log("jwt callback isNewUser", isNewUser);
             return token;
+        },
+        async signIn({ user, account, profile, email, credentials }) {
+
+            console.log("signIn callback", { user, account, profile, email, credentials });
+            return true;
         },
     }, 
     session: {

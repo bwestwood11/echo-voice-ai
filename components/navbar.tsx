@@ -1,9 +1,8 @@
-'use client'
 
 import MobileSidebar from "@/components/mobile-sidebar";
 import Link from "next/link";
 
-import { signOut, useSession } from "next-auth/react";
+// import { signOut, useSession } from "next-auth/react";
 import {Button} from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -14,14 +13,19 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
   import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getApiLimitCount } from "@/lib/api-limit";
 
 
 
-const Navbar = () => {
-    const { data: session } = useSession();
+const Navbar = async () => {
+  const apiLimitCount = await getApiLimitCount()
+   const session = await getServerSession(authOptions)
+   console.log("session", session)
     return (
         <div className="flex items-center p-4">
-             <MobileSidebar />
+             <MobileSidebar apiLimitCount={apiLimitCount} />
              <div className="flex w-full justify-end">
              <DropdownMenu>
                 <DropdownMenuTrigger className="cursor-pointer" asChild>
@@ -46,11 +50,13 @@ const Navbar = () => {
                     Settings
                   </Link>
                 </DropdownMenuItem>
+                <Link href={'/signout'}>
        <DropdownMenuItem className='mb-2 mt-2'>
-                  <Button onClick={() => signOut()} variant='ghost'>
+                  {/* <Button onClick={() => signOut()} variant='ghost'>
                     Sign out
-                  </Button>
+                  </Button> */}Sign out
                 </DropdownMenuItem>
+                </Link>
        </DropdownMenuContent>
             </DropdownMenu>
              </div>

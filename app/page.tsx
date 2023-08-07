@@ -12,11 +12,6 @@ export default function Home() {
     return (
         <>
           <HeroSection  />
-            <input className="border border-1 bg-gray-50" type="text" value={message} onChange={(e) => setMessage(e.target.value)} /> 
-
-            <Link href={`/test/${message}`}>
-              Click Me
-        </Link>
         </>
     )
 

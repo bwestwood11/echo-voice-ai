@@ -19,14 +19,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
+import AudioPlayer from "./audioPlayer";
 
 
 const navigation = [
-  { name: "Product", href: "#" },
-  { name: "Features", href: "#" },
-  { name: "Marketplace", href: "#" },
-  { name: "About", href: "#" },
+  { name: "Pricing", href: "/pricing" },
+  { name: "Features", href: "/features" },
+  { name: "Contact Us", href: "/contact" },
+  { name: "About", href: "/about" },
 ];
 
 const montserrat = Montserrat({
@@ -46,21 +46,10 @@ export default function HeroSection() {
 const { data: session, status } = useSession();
 console.log(session);
 
-const handleGirlClick = () => {
-    setHighlightedGirl((prev) => !prev);
-    setVoice('21m00Tcm4TlvDq8ikWAM')
-
-}
-
-const handleBoyClick = () => {
-    setHighlightedBoy((prev) => !prev);
-    setVoice('GBv7mTt0atIp3Br8iCZE')
-
-}
-
 
   return (
     <div className="bg-white">
+      {/* Navigation section for not signed in users */}
       <header className="absolute inset-x-0 top-0 z-50">
         <nav
           className="flex items-center justify-between p-6 lg:px-8"
@@ -200,11 +189,7 @@ const handleBoyClick = () => {
         <div className="mx-auto max-w-2xl py-32 sm:py-40 lg:py-56">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-              Professional Audio for Your Content{" "}
-              <a href="#" className="font-semibold text-indigo-600">
-                <span className="absolute inset-0" aria-hidden="true" />
-                Read more <span aria-hidden="true">&rarr;</span>
-              </a>
+              Sign in with your Google Account and Receive 5 Credits{" "}
             </div>
           </div>
           <div className="text-center">
@@ -221,45 +206,32 @@ const handleBoyClick = () => {
               <Button variant="secondary">Learn More</Button>
             </div>
             <div>
-                <h2 className="font-bold text-2xl mt-16">Try out two of our voices for free!</h2>
+                <h2 className="font-bold text-2xl mt-16">Listen to two voices of the many voices we offer!</h2>
             </div>
-            <div className="grid grid-cols-2 mt-6">
+            <div className="grid grid-cols-2 gap-10 mt-6">
                 <div className="flex flex-col">
                        <Image 
-                       onClick={handleBoyClick}
             className={cn("mx-auto cursor-pointer hover:border-2 hover:border-gray-100 hover:rounded-lg", hightlightedBoy && 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500')}
             src='/male1.png'
             alt='male'
             width={200}
             height={200}
             />
-            <h3 className="font-semibold">John - American Male Accent</h3> 
+            <h3 className="font-semibold mb-4">John - American Male Accent</h3> 
+            <AudioPlayer src="/johnamericanvoice.mp3" />
                 </div>
           <div className="flex flex-col">
           <Image 
-          onClick={handleGirlClick}
             className={cn("mx-auto cursor-pointer hover:border-2 hover:border-gray-100 hover:rounded-lg", hightlightedGirl && 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500')}
-            src='/girl3.png'
+            src='/girl6.png'
             alt='gir3'
             width={200}
             height={200}
             />
-            <h3 className="font-semibold">Rachel - American Woman Accent</h3>
+            <h3 className="font-semibold mb-4">Nicole - American Woman Accent</h3>
+            <AudioPlayer src="/nicoleamericanvoice.mp3" />
           </div>
              </div>
-
-            <div className="flex items-center mt-8 gap-2 w-1/2 mx-auto">
-              <Input
-                type="text"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Enter your prompt..."
-              />
-              <Link href={`/test/${message}&voice=${voice}`}>
-                <Button>Generate</Button>
-              </Link>
-            </div>
-            
           </div>
         </div>
         <div
