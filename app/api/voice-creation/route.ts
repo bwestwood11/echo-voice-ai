@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { blob } from "stream/consumers";
-import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
-
+import { increaseApiLimit, checkApiLimit, checkProApiLimit } from "@/lib/api-limit";
+import { checkSubscription } from "@/lib/subscription";
 
 export async function POST(req: Request) {
    const body = await req.json();
@@ -11,10 +11,16 @@ export async function POST(req: Request) {
    console.log(voiceID)
 
    const freeTrial = await checkApiLimit();
+   const isPro = await checkSubscription();
+   const proLimit = await checkProApiLimit();
 
-    if(!freeTrial) {
+    if(!freeTrial && !isPro) {
         return new NextResponse("Free trial has expired", { status: 403})
     };
+
+    if(isPro && !proLimit) {
+        return new NextResponse("Pro limit has been reached", { status: 401})
+    }
 
    const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceID}?optimize_streaming_latency=3`, {
         method: 'POST',

@@ -7,6 +7,7 @@ import { Montserrat } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const montserrat = Montserrat({
   weight: "600",
@@ -20,10 +21,12 @@ export default function YourVoicesPage({
 }) {
   const sourceElem = useRef(null);
   const router = useRouter();
+  const proModal = useProModal();
   const [voice, setVoice] = useState("");
   const [response, setResponse] = useState("");
+
   console.log("params", params);
-  // const voice = await cloneVoice({ params });
+  // using the params to get the correct name, image and flag
   const nameString = params.id[1].split("%26")[1];
   const name = nameString.split("%3D")[1];
   const imageString = params.id[1].split("%26")[0];
@@ -38,8 +41,12 @@ export default function YourVoicesPage({
 
   console.log("flag", correctFlagPath);
 
+  // using the params to get the correct voiceID
   const voiceIDString = params.id[0];
   const voiceID = voiceIDString.replace("%26image%3D", "");
+
+
+
 
   const handleVoiceInput = async () => {
     try {
@@ -55,8 +62,13 @@ export default function YourVoicesPage({
     });
 
     setResponse(await response.blob());
-    } catch (error) {
-      console.log(error)
+    
+    } catch (error: any) {
+      console.log("error", error)
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      }
+      
     } finally {
       router.refresh();
     }
@@ -70,7 +82,7 @@ export default function YourVoicesPage({
       >
         Your Voices
       </h1>
-      <div className="flex flex-col">
+      <div className="flex flex-col mb-8">
         <Image src={correctImagePath} alt="name" width={250} height={250} />
         <div className="flex flex-row gap-2 mx-auto mb-6 items-center">
           <h3 className="font-semibold text-2xl">{name}</h3>
@@ -82,7 +94,8 @@ export default function YourVoicesPage({
             onChange={(e) => setVoice(e.target.value)}
             placeholder="Type your text here..."
           />
-          <Button onClick={handleVoiceInput}>Generate</Button>
+          <p className={voice.length > 200 ? "text-red-500": ""}>Character Count: {voice.length}/200</p>
+          <Button disabled={voice.length > 201} onClick={handleVoiceInput}>Generate</Button>
         </div>
       </div>
 

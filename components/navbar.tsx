@@ -16,16 +16,17 @@ import {
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getApiLimitCount } from "@/lib/api-limit";
-
+import { checkSubscription } from "@/lib/subscription";
 
 
 const Navbar = async () => {
   const apiLimitCount = await getApiLimitCount()
+  const isPro = await checkSubscription()
    const session = await getServerSession(authOptions)
    console.log("session", session)
     return (
         <div className="flex items-center p-4">
-             <MobileSidebar apiLimitCount={apiLimitCount} />
+             <MobileSidebar isPro={isPro} apiLimitCount={apiLimitCount} />
              <div className="flex w-full justify-end">
              <DropdownMenu>
                 <DropdownMenuTrigger className="cursor-pointer" asChild>

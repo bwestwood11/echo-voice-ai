@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 export const SignoutModal = () => {
     return (
          <div>
-              <Dialog open={open} >
+              <Dialog open>
                <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Sign Out</DialogTitle>

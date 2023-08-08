@@ -1,6 +1,5 @@
 import { SignoutModal } from "@/components/signoutModal"
 
-
 const SignoutPage = () => {
   return (
     <div>
@@ -9,4 +8,4 @@ const SignoutPage = () => {
   )
 }
 
-export default SignoutPage
+export default SignoutPage;
