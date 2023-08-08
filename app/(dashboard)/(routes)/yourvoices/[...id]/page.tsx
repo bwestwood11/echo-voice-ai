@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useProModal } from "@/hooks/use-pro-modal";
+import { blob } from "stream/consumers";
 
 const montserrat = Montserrat({
   weight: "600",
@@ -23,7 +24,7 @@ export default function YourVoicesPage({
   const router = useRouter();
   const proModal = useProModal();
   const [voice, setVoice] = useState("");
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState<Blob | "">("");
 
   console.log("params", params);
   // using the params to get the correct name, image and flag
@@ -45,30 +46,25 @@ export default function YourVoicesPage({
   const voiceIDString = params.id[0];
   const voiceID = voiceIDString.replace("%26image%3D", "");
 
-
-
-
   const handleVoiceInput = async () => {
     try {
       const response = await fetch("/api/voice-creation", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        voiceID: voiceID,
-        text: voice,
-      }),
-    });
-
-    setResponse(await response.blob());
-    
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          voiceID: voiceID,
+          text: voice,
+        }),
+      });
+      const blobResponse = await response.blob();
+      setResponse(blobResponse);
     } catch (error: any) {
-      console.log("error", error)
+      console.log("error", error);
       if (error?.response?.status === 403) {
         proModal.onOpen();
       }
-      
     } finally {
       router.refresh();
     }
@@ -94,13 +90,17 @@ export default function YourVoicesPage({
             onChange={(e) => setVoice(e.target.value)}
             placeholder="Type your text here..."
           />
-          <p className={voice.length > 200 ? "text-red-500": ""}>Character Count: {voice.length}/200</p>
-          <Button disabled={voice.length > 201} onClick={handleVoiceInput}>Generate</Button>
+          <p className={voice.length > 200 ? "text-red-500" : ""}>
+            Character Count: {voice.length}/200
+          </p>
+          <Button disabled={voice.length > 201} onClick={handleVoiceInput}>
+            Generate
+          </Button>
         </div>
       </div>
 
-      <audio src={response ? URL.createObjectURL(response) : ''} controls />
-        {/* <source ref={sourceElem} src={response} type="audio/mpeg" /> */}
+      <audio src={response ? URL.createObjectURL(response) : ""} controls />
+      {/* <source ref={sourceElem} src={response} type="audio/mpeg" /> */}
     </div>
   );
 }

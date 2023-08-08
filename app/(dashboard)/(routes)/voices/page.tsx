@@ -2,8 +2,6 @@ import { cn } from "@/lib/utils";
 import { Montserrat } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const montserrat = Montserrat({
   weight: "600",
@@ -112,9 +110,6 @@ const voices = [
 
 // Hi there! my name is Dorothy and I am an AI voice that is perfect for your social media content, audio books and more
 const VoicesPage = async () => {
-  // get the session from the server
-  const session = await getServerSession(authOptions);
-  console.log("session object =>", session);
 
   return (
     <div className="w-full text-center">

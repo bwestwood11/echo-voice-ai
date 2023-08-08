@@ -6,6 +6,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 
 const prisma = new PrismaClient();
 
+
+
 export const authOptions:NextAuthOptions = {
    adapter: PrismaAdapter(prisma),
     providers: [

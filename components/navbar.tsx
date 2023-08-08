@@ -1,9 +1,6 @@
 
 import MobileSidebar from "@/components/mobile-sidebar";
 import Link from "next/link";
-
-// import { signOut, useSession } from "next-auth/react";
-import {Button} from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -12,7 +9,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
-  import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getApiLimitCount } from "@/lib/api-limit";
@@ -53,9 +50,7 @@ const Navbar = async () => {
                 </DropdownMenuItem>
                 <Link href={'/signout'}>
        <DropdownMenuItem className='mb-2 mt-2'>
-                  {/* <Button onClick={() => signOut()} variant='ghost'>
-                    Sign out
-                  </Button> */}Sign out
+                  Sign out
                 </DropdownMenuItem>
                 </Link>
        </DropdownMenuContent>

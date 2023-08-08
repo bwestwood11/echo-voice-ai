@@ -26,12 +26,10 @@ import { getServerSession } from "next-auth"
      })
     })
 
-    // Emily LcfcDJNUP1GQjkzn1xUU
-    // GBv7mTt0atIp3Br8iCZE
     let buffer = await (await response.blob()).arrayBuffer();
     buffer = Buffer.from(buffer);
 
-    const base64String = buffer.toString('base64');
+    const base64String = buffer.toString();
     const voice = `data:audio/mpeg;base64,${base64String}`;
     console.log(voice)
     return voice;

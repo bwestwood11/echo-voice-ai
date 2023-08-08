@@ -3,17 +3,19 @@
 import React, { useState, useRef } from 'react';
 import { Play } from 'lucide-react';
 
-const AudioPlayer = ({ src }) => {
-  const audioRef = useRef(null) ;
+const AudioPlayer = ({ src }: any) => {
+  const audioRef = useRef<HTMLAudioElement | null>(null) ;
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlayPause = () => {
+    if(audioRef.current){
     if (isPlaying) {
       audioRef.current.pause();
     } else {
       audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
+  }
   };
 
   return (

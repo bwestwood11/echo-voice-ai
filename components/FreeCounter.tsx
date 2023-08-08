@@ -34,7 +34,7 @@ export const FreeCounter = ({
           <div className="text-center text-sm text-white mb-4 space-y-2">
             {isPro ? (
               <p>
-                {apiLimitCount} / {MAX_PRO_COUNTS} Free Generations
+                {apiLimitCount} / {MAX_PRO_COUNTS} Generations
               </p>
             ) : (
               <p>
