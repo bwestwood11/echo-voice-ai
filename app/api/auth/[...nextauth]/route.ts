@@ -1,16 +1,17 @@
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
+
 const prisma = new PrismaClient();
 
-export const authOptions: AuthOptions = {
+export const authOptions:NextAuthOptions = {
    adapter: PrismaAdapter(prisma),
     providers: [
         GoogleProvider({
-            clientId: process.env.GOOGLE_ID,
-            clientSecret: process.env.GOOGLE_SECRET,
+            clientId: process.env.GOOGLE_ID!,
+            clientSecret: process.env.GOOGLE_SECRET!,
             authorization: {
                 params: {
                   prompt: "consent",
@@ -21,11 +22,11 @@ export const authOptions: AuthOptions = {
         }),
     ],
     callbacks: {
-        async session({ session, user, token}) {
+        async session({ session, user, token }:any) {
             session.user.id = token.sub;
             return session;
         },
-        async jwt({ token, user, account, profile, isNewUser }) {
+        async jwt({ token, user, account, profile, isNewUser }:any) {
         console.log("jwt callback token", token);
         console.log("jwt callback user", user);
         console.log("jwt callback account", account);
@@ -33,7 +34,7 @@ export const authOptions: AuthOptions = {
         console.log("jwt callback isNewUser", isNewUser);
             return token;
         },
-        async signIn({ user, account, profile, email, credentials }) {
+        async signIn({ user, account, profile, email, credentials }: any) {
 
             console.log("signIn callback", { user, account, profile, email, credentials });
             return true;
@@ -49,6 +50,8 @@ export const authOptions: AuthOptions = {
     }
         
 };
+
+
 
 const handler = NextAuth(authOptions);
 
