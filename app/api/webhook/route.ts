@@ -53,6 +53,15 @@ export async function POST(req: Request) {
             stripeCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
         },
     });
+
+    await prismadb.userApiLimit.update({
+        where: {
+            userId: session?.metadata?.userId,
+        },
+        data: {
+          count: 0,
+        },
+    });
   }
   return new NextResponse(null, { status: 200 });
 };
