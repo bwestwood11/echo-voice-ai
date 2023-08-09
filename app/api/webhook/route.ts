@@ -55,23 +55,15 @@ export async function POST(req: Request) {
         },
     });
 
-    const userApiLimit = await prismadb.userApiLimit.findUnique({
+    // Update the count in the Prisma database
+    await prismadb.userApiLimit.update({
       where: {
-          userId: session?.metadata?.userId
-      }
-  });
-
-  // if the user's api limit exists, update the count
-  if(userApiLimit) {
-      await prismadb.userApiLimit.update({
-          where: {
-              userId: session?.metadata?.userId
-          },
-          data: {
-              count: userApiLimit.count = 0
-          }
-      });
-    }
+        userId: session?.metadata?.userId,
+      },
+      data: {
+        count: 0, // Reset the count to 0
+      },
+    });
 
   }
 
