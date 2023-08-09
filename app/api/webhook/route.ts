@@ -55,7 +55,6 @@ export async function POST(req: Request) {
         },
     });
 
-     // retrieve the user's api limit from the database
     const userApiLimit = await prismadb.userApiLimit.findUnique({
       where: {
           userId: session?.metadata?.userId
@@ -72,7 +71,9 @@ export async function POST(req: Request) {
               count: userApiLimit.count + 1
           }
       });
+    }
 
   }
+
   return new NextResponse(null, { status: 200 });
 };
