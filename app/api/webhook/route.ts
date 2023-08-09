@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 import prismadb from "@/lib/prismadb";
 import { stripe } from "@/lib/stripe";
+import { use } from "react";
 
 export async function POST(req: Request) {
    const body = await req.text();
@@ -54,14 +55,24 @@ export async function POST(req: Request) {
         },
     });
 
-    await prismadb.userApiLimit.update({
-        where: {
-            userId: session?.metadata?.userId,
-        },
-        data: {
-          count: 0,
-        },
-    });
+     // retrieve the user's api limit from the database
+    const userApiLimit = await prismadb.userApiLimit.findUnique({
+      where: {
+          userId: session?.metadata?.userId
+      }
+  });
+
+  // if the user's api limit exists, update the count
+  if(userApiLimit) {
+      await prismadb.userApiLimit.update({
+          where: {
+              userId: session?.metadata?.userId
+          },
+          data: {
+              count: userApiLimit.count + 1
+          }
+      });
+
   }
   return new NextResponse(null, { status: 200 });
 };
