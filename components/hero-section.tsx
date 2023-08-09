@@ -202,7 +202,7 @@ console.log(session);
               Speech.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Button variant="outline">Get Started</Button>
+              <Button onClick={() => signIn('google')} variant="outline">Get Started</Button>
               <Button variant="secondary">Learn More</Button>
             </div>
             <div>
