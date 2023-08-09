@@ -199,7 +199,7 @@ console.log(session);
             <p className="mt-6 text-lg leading-8 text-gray-600">
               Enhance Your Content Creation: Unlock Creative Possibilities by
               Choosing from a Diverse Range of Voices to Transform Text into
-              Speech.
+              Speech!
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Button onClick={() => signIn('google')} variant="outline">Get Started</Button>

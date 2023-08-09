@@ -26,7 +26,7 @@ export const FreeCounter = ({
   }, []);
 
   if (!mounted) return null;
-
+console.log(isPro)
   return (
     <div className="px-3">
       <Card className="bg-white/10 border-0">
