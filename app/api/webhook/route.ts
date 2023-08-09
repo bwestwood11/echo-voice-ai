@@ -68,7 +68,7 @@ export async function POST(req: Request) {
               userId: session?.metadata?.userId
           },
           data: {
-              count: userApiLimit.count + 1
+              count: userApiLimit.count = 0
           }
       });
     }
