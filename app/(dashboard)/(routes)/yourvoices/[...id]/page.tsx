@@ -9,6 +9,7 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useProModal } from "@/hooks/use-pro-modal";
 import { blob } from "stream/consumers";
+import { Download } from "lucide-react";
 
 const montserrat = Montserrat({
   weight: "600",
@@ -25,6 +26,7 @@ export default function YourVoicesPage({
   const proModal = useProModal();
   const [voice, setVoice] = useState("");
   const [response, setResponse] = useState<Blob | "">("");
+
 
   console.log("params", params);
   // using the params to get the correct name, image and flag
@@ -58,6 +60,16 @@ export default function YourVoicesPage({
           text: voice,
         }),
       });
+
+      if (!response.ok) {
+        if (response.status === 403) {
+          proModal.onOpen();
+        } else {
+          console.log("Unexpected response status:", response.status);
+        }
+        return; // Stop further processing
+      }
+  
       const blobResponse = await response.blob();
       setResponse(blobResponse);
     } catch (error: any) {
@@ -93,7 +105,7 @@ export default function YourVoicesPage({
           <p className={voice.length > 200 ? "text-red-500" : ""}>
             Character Count: {voice.length}/200
           </p>
-          <Button disabled={voice.length > 201} onClick={handleVoiceInput}>
+          <Button disabled={voice.length > 200} onClick={handleVoiceInput}>
             Generate
           </Button>
         </div>
@@ -101,6 +113,9 @@ export default function YourVoicesPage({
 
       <audio src={response ? URL.createObjectURL(response) : ""} controls />
       {/* <source ref={sourceElem} src={response} type="audio/mpeg" /> */}
+      <a className="flex items-center gap-4 mt-10" href={response ? URL.createObjectURL(response) : ""} download>
+       {response ? (<><Download size={32} />  <p>Download Audio File</p></>): "" } 
+      </a>
     </div>
   );
 }
