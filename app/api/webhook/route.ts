@@ -72,6 +72,8 @@ export async function POST(req: Request) {
             count: userApiLimit.count = 0
         }
     });
+
+  }
   }
 
   return new NextResponse(null, { status: 200 });
