@@ -56,16 +56,22 @@ export async function POST(req: Request) {
     });
 
     // Update the count in the Prisma database
-    if(session?.metadata?.userId) {
+    const userApiLimit = await prismadb.userApiLimit.findUnique({
+      where: {
+          userId: session?.metadata?.userId
+      }
+  });
+
+  // if the user's api limit exists, update the count
+  if(userApiLimit) {
     await prismadb.userApiLimit.update({
         where: {
-            userId: session?.metadata?.userId,
+            userId: session?.metadata?.userId
         },
         data: {
-            count: 0,
-        },
+            count: userApiLimit.count = 0
+        }
     });
-  }
   }
 
   return new NextResponse(null, { status: 200 });
