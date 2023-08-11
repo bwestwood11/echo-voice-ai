@@ -34,7 +34,7 @@ const routes = [
     {
         label: "Clone Your Voice",
         icon: Activity,
-        href: "/clone",
+        href: "/clone-voice",
         color: "text-orange-500",
     },
     {

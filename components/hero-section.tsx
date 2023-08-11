@@ -40,8 +40,7 @@ export default function HeroSection() {
   const [message, setMessage] = useState("");
   const [voice, setVoice] = useState("");
   const [image, setImage ] = useState("");
-  const [hightlightedGirl, setHighlightedGirl] = useState(false);
-  const [hightlightedBoy, setHighlightedBoy] = useState(false);
+
 
 const { data: session, status } = useSession();
 console.log(session);
@@ -211,7 +210,7 @@ console.log(session);
             <div className="grid grid-cols-2 gap-10 mt-6">
                 <div className="flex flex-col">
                        <Image 
-            className={cn("mx-auto cursor-pointer hover:border-2 hover:border-gray-100 hover:rounded-lg", hightlightedBoy && 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500')}
+            className={cn("mx-auto cursor-pointer hover:border-2 hover:border-gray-100 hover:rounded-lg") }
             src='/male1.png'
             alt='male'
             width={200}
@@ -222,7 +221,7 @@ console.log(session);
                 </div>
           <div className="flex flex-col">
           <Image 
-            className={cn("mx-auto cursor-pointer hover:border-2 hover:border-gray-100 hover:rounded-lg", hightlightedGirl && 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500')}
+            className={cn("mx-auto cursor-pointer hover:border-2 hover:border-gray-100 hover:rounded-lg")}
             src='/girl6.png'
             alt='gir3'
             width={200}
