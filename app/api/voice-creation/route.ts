@@ -14,14 +14,17 @@ export async function POST(req: Request) {
    const isPro = await checkSubscription();
    const proLimit = await checkProApiLimit();
 
+    // free trial expired and not pro then return 403    
     if(!freeTrial && !isPro) {
         return new NextResponse("Free trial has expired", { status: 403})
     };
-
+    
+    // pro limit reached then return 401
     if(isPro && !proLimit) {
         return new NextResponse("Pro limit has been reached", { status: 401})
     }
 
+    // make an API request to eleven labs for the voice audio
    const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceID}?optimize_streaming_latency=3`, {
         method: 'POST',
         headers: {
@@ -39,16 +42,10 @@ export async function POST(req: Request) {
 
     }); 
 
+    //  increase the api limit or counter if pro
     await increaseApiLimit();
 
     console.log(response.headers)
-    // let buffer = await (await response.blob()).arrayBuffer();
-    // buffer = Buffer.from(buffer);
-
-    // const base64String = buffer.toString('base64');
-    // const voice = `data:audio/mpeg;base64,${base64String}`;
-
-    // console.log(voice)
     const blob = await response.blob();
 
     return new NextResponse(blob)

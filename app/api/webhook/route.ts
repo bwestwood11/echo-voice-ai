@@ -57,14 +57,13 @@ export async function POST(req: Request) {
 
     // Update the count in the Prisma database
     await prismadb.userApiLimit.update({
-      where: {
-        userId: session?.metadata?.userId,
-      },
-      data: {
-        count: 0, // Reset the count to 0
-      },
+        where: {
+            userId: session?.metadata?.userId,
+        },
+        data: {
+            count: 0,
+        },
     });
-
   }
 
   return new NextResponse(null, { status: 200 });
