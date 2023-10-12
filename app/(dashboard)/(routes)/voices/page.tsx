@@ -109,21 +109,21 @@ const voices = [
 
 // Hi there! my name is Dorothy and I am an AI voice that is perfect for your social media content, audio books and more
 const VoicesPage = async () => {
-
   return (
     <div className="w-full text-center bg-slate-100">
       <h1 className={cn("font-extrabold text-3xl px-8", montserrat.className)}>
         Pick the voice you would like to try!
       </h1>
       <p className="mt-4 text-gray-500 px-12">
-        Check out their voice by clicking on the audio button. If you like the voice, click on the image to start creating your content!
+        Check out their voice by clicking on the audio button. If you like the
+        voice, click on the image to start creating your content!
       </p>
       {/* Code that maps through all the voices */}
       <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 mt-10">
         {voices.map((voice) => (
           <div className="flex flex-col" key={voice.voiceID}>
             <Link
-              href={`/yourvoices/${voice.voiceID}&image=${voice.image}&name=${voice.name}&flag=${voice.flag}`}
+              href={`/your-voices/${voice.voiceID}&image=${voice.image}&name=${voice.name}&flag=${voice.flag}`}
             >
               <Image
                 className="mx-auto cursor-pointer hover:border-2 hover:border-gray-100 hover:rounded-lg"

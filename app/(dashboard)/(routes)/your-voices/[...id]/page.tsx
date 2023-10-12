@@ -11,6 +11,8 @@ import { useProModal } from "@/hooks/use-pro-modal";
 import { blob } from "stream/consumers";
 import { Download } from "lucide-react";
 import Link from "next/link";
+import { set } from "animejs";
+import { ImSpinner3 } from "react-icons/im";
 
 const montserrat = Montserrat({
   weight: "600",
@@ -27,7 +29,7 @@ export default function YourVoicesPage({
   const proModal = useProModal();
   const [voice, setVoice] = useState("");
   const [response, setResponse] = useState<Blob | "">("");
-
+  const [converting, setConverting] = useState(false);
 
   console.log("params", params);
   // using the params to get the correct name, image and flag
@@ -51,6 +53,7 @@ export default function YourVoicesPage({
 
   const handleVoiceInput = async () => {
     try {
+      setConverting(true);
       const response = await fetch("/api/voice-creation", {
         method: "POST",
         headers: {
@@ -64,13 +67,14 @@ export default function YourVoicesPage({
 
       if (!response.ok) {
         if (response.status === 403) {
+          setConverting(false);
           proModal.onOpen();
         } else {
           console.log("Unexpected response status:", response.status);
         }
         return; // Stop further processing
       }
-  
+
       const blobResponse = await response.blob();
       setResponse(blobResponse);
     } catch (error: any) {
@@ -79,13 +83,14 @@ export default function YourVoicesPage({
         proModal.onOpen();
       }
     } finally {
+      setConverting(false);
       router.refresh();
     }
   };
 
   console.log("voiceID", voiceID);
   return (
-    <div className="text-center flex flex-col items-center w-full">
+    <div className="text-center flex flex-col items-center w-full bg-slate-100">
       <h1
         className={cn("mt-10 font-bold text-4xl mb-10", montserrat.className)}
       >
@@ -108,19 +113,42 @@ export default function YourVoicesPage({
           </p>
           <Button disabled={voice.length > 200} onClick={handleVoiceInput}>
             Generate
+            {converting && (
+              <span className="animate-spin text-lg ml-3">
+                <ImSpinner3 />
+              </span>
+            )}
           </Button>
         </div>
       </div>
-
-      <audio src={response ? URL.createObjectURL(response) : ""} controls />
+      {response && (
+        <>
+        <audio src={response ? URL.createObjectURL(response) : ""} controls />
       {/* <source ref={sourceElem} src={response} type="audio/mpeg" /> */}
-      <a className="flex items-center gap-4 mt-10" href={response ? URL.createObjectURL(response) : ""} download>
-       {response ? (<><Download size={32} />  <p>Download Audio File</p></>): "" } 
+      <a
+        className="flex items-center gap-4 mt-10"
+        href={response ? URL.createObjectURL(response) : ""}
+        download
+      >
+        {response ? (
+          <>
+            <Download size={32} /> <p>Download Audio File</p>
+          </>
+        ) : (
+          ""
+        )}
       </a>
-      <Link href={{
-        pathname: "/dashboard",
-        query: { voice: response ? URL.createObjectURL(response) : ""}
-      }} >Add to Your Dashboard</Link>
+      <Link
+        href={{
+          pathname: "/dashboard",
+          query: { voice: response ? URL.createObjectURL(response) : "" },
+        }}
+      >
+        Add to Your Dashboard
+      </Link>
+        </>
+      )}
+      
     </div>
   );
 }
