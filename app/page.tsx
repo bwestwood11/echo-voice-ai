@@ -1,19 +1,16 @@
-"use client"
+'use client'
 
 import FAQ from "@/components/FAQ"
 import LogoClouds from "@/components/Logos"
+import Hero from "@/components/Hero"
 import HeroSection from "@/components/hero-section"
-import Link from "next/link"
-import { useState } from "react"
+
 
 export default function Home() {
-    const [message, setMessage] = useState("")
-
-
-
+  
     return (
         <>
-          <HeroSection  />
+         <Hero />
           <LogoClouds />
           <FAQ />
         </>

@@ -15,7 +15,7 @@ import { Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
-export const ProModal = () => {
+const ProModal = () => {
   const proModal = useProModal();
   const [loading, setLoading] = useState(false);
 
@@ -61,3 +61,5 @@ export const ProModal = () => {
     </Dialog>
   );
 };
+
+export default ProModal;

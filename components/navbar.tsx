@@ -1,4 +1,5 @@
 
+
 import MobileSidebar from "@/components/mobile-sidebar";
 import Link from "next/link";
 import {
@@ -22,7 +23,7 @@ const Navbar = async () => {
    const session = await getServerSession(authOptions)
    console.log("session", session)
     return (
-        <div className="flex items-center p-4">
+        <div className="flex items-center p-4 bg-slate-100">
              <MobileSidebar isPro={isPro} apiLimitCount={apiLimitCount} />
              <div className="flex w-full justify-end">
              <DropdownMenu>
@@ -34,17 +35,17 @@ const Navbar = async () => {
                 </DropdownMenuTrigger>
        <DropdownMenuContent className="mt-4 mr-1 z-10">
        <DropdownMenuItem className='mb-2 mt-2'>
-                  <Link href={`/dashboard`}>
+                  <Link href='/dashboard'>
                     Dashboard
                   </Link>
                 </DropdownMenuItem>
        <DropdownMenuItem className='mb-2 mt-2'>
-                  <Link href={`/dashboard`}>
+                  <Link href='/dashboard'>
                     Your Account
                   </Link>
                 </DropdownMenuItem>
        <DropdownMenuItem className='mb-2 mt-2'>
-                  <Link href={`/dashboard`}>
+                  <Link href='/settings'>
                     Settings
                   </Link>
                 </DropdownMenuItem>

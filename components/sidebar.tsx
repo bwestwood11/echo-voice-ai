@@ -6,10 +6,9 @@ import { Montserrat } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { LayoutDashboard, Volume2Icon, Activity, Settings, Volume1Icon } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { FreeCounter } from "./FreeCounter";
+import FreeCounter from "./FreeCounter";
 
 const montserrat = Montserrat({
-    weight: "600",
     subsets: ["latin"],
 })
 
@@ -23,31 +22,31 @@ const routes = [
         label: "Dashboard",
         icon: LayoutDashboard,
         href: "/dashboard",
-        color: "text-sky-500",
+        color: "text-[#ff8303]",
     },
     {
         label: "Voices",
         icon: Volume2Icon,
         href: "/voices",
-        color: "text-rose-500",
+        color: "text-[#ff8303]",
     },
     {
-        label: "Clone Your Voice",
+        label: "Video Editor",
         icon: Activity,
-        href: "/clone-voice",
-        color: "text-orange-500",
+        href: "/video-editor",
+        color: "text-[#ff8303]",
     },
     {
         label: "Your Voices",
         icon: Volume1Icon,
-        href: "/yourvoices",
-        color: "text-yellow-500",
+        href: "/your-voices",
+        color: "text-[#ff8303]",
     },
     {
         label: "Settings",
         icon: Settings,
         href: "/settings",
-        color: "text-green-500",
+        color: "text-[#ff8303]",
     },
 
 ]
@@ -58,16 +57,16 @@ const Sidebar = ({ apiLimitCount = 0, isPro = false }: SidebarProps) => {
     return (
         <div className="space-y-4 py-4 flex flex-col h-full bg-slate-900 text-white">
              <div className="px-3 py-2 flex-1">
-                 <Link href="/dashboard" className="flex items-center mb-14">
+                 <Link href="/" className="flex items-center mb-14">
                      <div className="relative w-16 h-16">
                        <Image
                        fill
                        alt='Logo'
-                       src="/logo.png"
+                       src="/fusion-logo-orange.png"
                        />
                      </div>
-                     <h1 className={cn("text-xl font-bold", montserrat.className)}>
-                        Echo Sounds AI
+                     <h1 className={cn("text-lg uppercase font-extrabold", montserrat.className)}>
+                        Voice Fusion
                         </h1>
                     </Link>
                     <div className="space-y-1">

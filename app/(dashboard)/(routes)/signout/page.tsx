@@ -1,4 +1,4 @@
-import { SignoutModal } from "@/components/signoutModal"
+import SignoutModal from "@/components/signoutModal"
 
 const SignoutPage = () => {
   return (

@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 const montserrat = Montserrat({
-  weight: "600",
   subsets: ["latin"],
 });
 
@@ -112,8 +111,8 @@ const voices = [
 const VoicesPage = async () => {
 
   return (
-    <div className="w-full text-center">
-      <h1 className={cn("font-bold text-3xl px-8", montserrat.className)}>
+    <div className="w-full text-center bg-slate-100">
+      <h1 className={cn("font-extrabold text-3xl px-8", montserrat.className)}>
         Pick the voice you would like to try!
       </h1>
       <p className="mt-4 text-gray-500 px-12">

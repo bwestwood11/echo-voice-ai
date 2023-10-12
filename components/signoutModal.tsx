@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 
-export const SignoutModal = () => {
+const SignoutModal = () => {
     return (
          <div>
               <Dialog open>
@@ -16,10 +16,12 @@ export const SignoutModal = () => {
                 <DialogHeader>
                     <DialogTitle>Sign Out</DialogTitle>
                     <DialogDescription>Are you sure you want to sign out?</DialogDescription>
-                    <Button onClick={() => signOut({ callbackUrl: 'http://localhost:3000'})} variant='ghost'>Sign Out Here </Button>
+                    <Button onClick={() => signOut({ callbackUrl: '/'})} variant='ghost'>Sign Out Here </Button>
                 </DialogHeader>
                </DialogContent>
                 </Dialog>
          </div>
          )
 }
+
+export default SignoutModal

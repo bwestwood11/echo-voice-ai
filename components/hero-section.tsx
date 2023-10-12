@@ -20,6 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import AudioPlayer from "./audioPlayer";
+import NavigationBar from "./Home-Navbar";
 
 
 const navigation = [
@@ -30,7 +31,6 @@ const navigation = [
 ];
 
 const montserrat = Montserrat({
-  weight: "600",
   subsets: ["latin"],
 });
 
@@ -40,7 +40,7 @@ export default function HeroSection() {
   const [message, setMessage] = useState("");
   const [voice, setVoice] = useState("");
   const [image, setImage ] = useState("");
-
+ 
 
 const { data: session, status } = useSession();
 console.log(session);
@@ -50,14 +50,15 @@ console.log(session);
     <div className="bg-white">
       {/* Navigation section for not signed in users */}
       <header className="absolute inset-x-0 top-0 z-50">
-        <nav
+        <NavigationBar />
+        {/* <nav
           className="flex items-center justify-between p-6 lg:px-8"
           aria-label="Global"
         >
           <div className="flex items-center lg:flex-1">
             <Image src="/logo.png" alt="Logo" width={80} height={80} />
-            <span className={cn("font-bold text-xl", montserrat.className)}>
-              Echo Sounds AI
+            <span className={cn("font-extrabold uppercase text-xl", montserrat.className)}>
+              Voice Fusion
             </span>
           </div>
           <div className="flex lg:hidden">
@@ -118,7 +119,7 @@ console.log(session);
             </DropdownMenu>
             )}
                   </div>
-        </nav>
+        </nav> */}
         <Dialog
           as="div"
           className="lg:hidden"

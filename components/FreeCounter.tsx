@@ -8,13 +8,14 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Settings, Zap } from "lucide-react";
 import { useProModal } from "@/hooks/use-pro-modal";
+import { FcSettings } from "react-icons/fc";
 
 interface FreeCounterProps {
   apiLimitCount: number;
   isPro: boolean;
 }
 
-export const FreeCounter = ({
+const FreeCounter = ({
   apiLimitCount = 0,
   isPro = false,
 }: FreeCounterProps) => {
@@ -34,11 +35,11 @@ console.log(isPro)
           <div className="text-center text-sm text-white mb-4 space-y-2">
             {isPro ? (
               <p>
-                {apiLimitCount} / {MAX_PRO_COUNTS} Generations
+                {apiLimitCount} / {MAX_PRO_COUNTS} Voice Creations
               </p>
             ) : (
               <p>
-                {apiLimitCount} / {MAX_FREE_COUNTS} Free Generations
+                {apiLimitCount} / {MAX_FREE_COUNTS} Voice Creations
               </p>
             )}
 
@@ -57,11 +58,11 @@ console.log(isPro)
           {isPro ? (
             <Link href="/settings">
             <Button
-              variant="outline"
+              variant="orange"
               className="w-full"
             >
               Settings
-              <Settings className="w-4 h-4 ml-2 fill-white" />
+              <FcSettings className="w-4 h-4 ml-2" />
             </Button>
             </Link>
           ) : (
@@ -79,3 +80,5 @@ console.log(isPro)
     </div>
   );
 };
+
+export default FreeCounter;

@@ -1,9 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ProModal } from "@/components/proModal"
+import ProModal from "@/components/proModal"
 
-export const ModalProvider = () => {
+const ModalProvider = () => {
     const [isMounted, setIsMounted] = useState(false)
 
     useEffect(() => {
@@ -19,3 +19,5 @@ export const ModalProvider = () => {
         </>
     )
 }
+
+export default ModalProvider
