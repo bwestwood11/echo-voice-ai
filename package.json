@@ -56,8 +56,6 @@
     "typescript": "5.1.6",
     "video.js": "^8.6.0",
     "videojs-contrib-hls": "^5.15.0",
-    "wavesurfer-react": "^2.2.3",
-    "wavesurfer.js": "^7.4.5",
     "web-audio-api": "^0.2.2",
     "zustand": "^4.4.1"
   },
