@@ -217,19 +217,28 @@ const NavigationBar = () => {
                 <SheetContent className="h-screen">
                   <SheetHeader>
                     <SheetTitle>
-                      <div className={cn(montserrat.className, "flex font-extrabold uppercase items-center")}>
+                      <div
+                        className={cn(
+                          montserrat.className,
+                          "flex font-extrabold uppercase items-center"
+                        )}
+                      >
                         <Image
                           src="/fusion-logo-orange.png"
                           alt="Logo"
                           width={80}
                           height={80}
-                        /> 
+                        />
                         <Link href="/">Voice Fusion</Link>
-                    </div>
-                     
+                      </div>
                     </SheetTitle>
                     <SheetDescription>
-                      <ul className={cn(montserrat.className, "font-bold text-black text-xl gap-10 flex flex-col mt-20")}>
+                      <ul
+                        className={cn(
+                          montserrat.className,
+                          "font-bold text-black text-xl gap-10 flex flex-col mt-20"
+                        )}
+                      >
                         <li>
                           <Link href="/docs">Features</Link>
                         </li>
@@ -241,7 +250,12 @@ const NavigationBar = () => {
                         </li>
                       </ul>
                       <div className="mt-10 flex gap-6 mx-auto justify-center">
-                        <Button variant='orange' onClick={() => signIn("google")}>Sign In</Button>
+                        <Button
+                          variant="orange"
+                          onClick={() => signIn("google")}
+                        >
+                          Sign In
+                        </Button>
                         <Button onClick={() => signIn()} variant="outline">
                           Sign Up
                         </Button>

@@ -76,3 +76,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+h3 {
+  @apply font-extrabold text-4xl uppercase
+}
+
+p {
+  @apply text-slate-700
+}

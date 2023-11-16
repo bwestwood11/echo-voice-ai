@@ -8,9 +8,9 @@ import DragableView from "./DragableView";
 export const TimeFrameView = observer((props: { element: EditorElement }) => {
   const store = React.useContext(StoreContext);
   const { element } = props;
-  const disabled = element.type === "audio";
+  const disabled = element.type === "text";
   const isSelected = store.selectedElement?.id === element.id;
-  const bgColorOnSelected = isSelected ? "bg-slate-800" : "bg-slate-600";
+  const bgColorOnSelected = isSelected ? "bg-[#e08700]" : "bg-slate-600";
   const disabledCursor = disabled ? "cursor-no-drop" : "cursor-ew-resize";
 
   return (

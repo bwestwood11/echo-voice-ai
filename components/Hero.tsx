@@ -54,10 +54,7 @@ const Hero = () => {
               Generated in Seconds
             </h2>
             <p className="mt-6">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur
-              eligendi officiis quod illo impedit. Numquam itaque ducimus,
-              dignissimos accusamus voluptatem suscipit tempore at, excepturi
-              fuga, delectus facilis nesciunt id totam.
+              Create natural sounding voiceovers for your videos, podcasts, and more. Choose from a variety of voices and languages to find the perfect voice for your project. 
             </p>
            {!session ? (
             <Button variant="orange" size="lg" className="mt-6">

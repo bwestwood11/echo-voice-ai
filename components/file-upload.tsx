@@ -1,29 +1,51 @@
+'use client'
+
+import React, { useState } from 'react';
+import { Inbox } from 'lucide-react';
+import { useDropzone } from 'react-dropzone';
+
+const FileUpload = () => {
+  const [videoFile, setVideoFile] = useState<string | null>(null);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: { 'video/*': ['.mp4', '.mkv', '.avi', '.webm'] },
+    maxFiles: 1,
+    onDrop: (acceptedFiles) => {
+      const [firstFile] = acceptedFiles;
+      if (firstFile.type.startsWith('video')) {
+        console.log('Video File:', firstFile);
+        setVideoFile(URL.createObjectURL(firstFile));
+      }
+    },
+  });
 
 
-export default function FileUpload() {
-
-    return (
-      <button
-        type="button"
-        className="relative block sm:w-1/5 w-1/2 mx-auto rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-      >
-        
-        <svg
-          className="mx-auto h-12 w-12 text-gray-400"
-          stroke="currentColor"
-          fill="none"
-          viewBox="0 0 48 48"
-          aria-hidden="true"
+  return (
+    <div>
+      <div className="p-2 bg-white rounded-xl w-1/4 mx-auto">
+        <div
+          {...getRootProps({
+            className:
+              'border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-8 flex justify-center items-center flex-col',
+          })}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6"
-          />
-        </svg>
-        <span className="mt-2 block text-sm font-semibold text-gray-900 mb-3">Upload Your Audio File</span>
-        <input type="file" name="file" />
-      </button>
-    )
-  }
+          <input {...getInputProps()} />
+          <>
+            <Inbox className="w-10 h-10 text-blue-500" />
+            <p className="mt-2 text-sm text-slate-400">Drop Video File Here</p>
+          </>
+        </div>
+      </div>
+      {videoFile && (
+        <div className='md:w-1/3 mx-auto mt-10'>
+          <video controls className='rounded-lg shadow-2xl'>
+            <source src={videoFile} type="video/mp4" />
+          </video>
+        </div>
+      )}
+   
+    </div>
+  );
+};
+
+export default FileUpload;

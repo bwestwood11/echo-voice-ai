@@ -3,8 +3,8 @@
 import FAQ from "@/components/FAQ"
 import LogoClouds from "@/components/Logos"
 import Hero from "@/components/Hero"
-import HeroSection from "@/components/hero-section"
 import VideoSection from "@/components/Video-Example"
+import WhyUs from "@/components/why-us"
 
 
 export default function Home() {
@@ -14,6 +14,7 @@ export default function Home() {
          <Hero />
           <LogoClouds />
           <VideoSection />
+          <WhyUs />
           <FAQ />
         </>
     )

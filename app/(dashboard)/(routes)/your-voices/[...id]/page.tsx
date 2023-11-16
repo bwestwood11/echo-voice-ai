@@ -111,7 +111,7 @@ export default function YourVoicesPage({
           <p className={voice.length > 200 ? "text-red-500" : ""}>
             Character Count: {voice.length}/200
           </p>
-          <Button disabled={voice.length > 200} onClick={handleVoiceInput}>
+          <Button  onClick={handleVoiceInput}>
             Generate
             {converting && (
               <span className="animate-spin text-lg ml-3">
