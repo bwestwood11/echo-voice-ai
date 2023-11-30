@@ -1,5 +1,6 @@
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import VideoProcessor from "@/components/FileUpload";
 import FileUpload from "@/components/file-upload";
 import { cn } from "@/lib/utils";
 import { getServerSession } from "next-auth";
@@ -27,6 +28,7 @@ const DashboardPage = async () => {
         </h2>
       </div>
       <FileUpload/>
+      {/* <VideoProcessor /> */}
     </div>
   );
 };

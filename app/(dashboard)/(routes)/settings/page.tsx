@@ -13,7 +13,7 @@ const SettingsPage = async () => {
    const subscription = await subscriptionData()
   console.log("single subscription", subscription)
   return (
-    <div>
+    <div className="h-screen bg-slate-100">
           <div className="px-4 lg:px-8 flex items-center gap-x-3 mb-8">
         <div className={cn("p-2 w-fit rounded-md bg-gray-700/10")}>
           <Settings className={cn("w-10 h-10 text-gray-700")} />

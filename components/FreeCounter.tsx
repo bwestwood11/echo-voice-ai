@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { MAX_FREE_COUNTS, MAX_PRO_COUNTS } from "@/constants";
+import { MAX_CHARACTERS, MAX_FREE_COUNTS, MAX_PRO_COUNTS } from "@/constants";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Settings, Zap } from "lucide-react";
@@ -13,11 +13,13 @@ import { FcSettings } from "react-icons/fc";
 interface FreeCounterProps {
   apiLimitCount: number;
   isPro: boolean;
+  characterCount: number;
 }
 
 const FreeCounter = ({
   apiLimitCount = 0,
   isPro = false,
+  characterCount = 0,
 }: FreeCounterProps) => {
   const proModal = useProModal();
   const [mounted, setMounted] = useState(false);
@@ -33,12 +35,21 @@ console.log(isPro)
       <Card className="bg-white/10 border-0">
         <CardContent className="py-6">
           <div className="text-center text-sm text-white mb-4 space-y-2">
-            {isPro ? (
-              <p>
+            {/* {isPro ? (
+              <p className="text-white">
                 {apiLimitCount} / {MAX_PRO_COUNTS} Voice Creations
               </p>
             ) : (
-              <p>
+              <p className="text-white">
+                {apiLimitCount} / {MAX_FREE_COUNTS} Voice Creations
+              </p>
+            )} */}
+            {isPro ? (
+              <p className="text-white">
+                {characterCount} / {MAX_CHARACTERS} Characters
+              </p>
+            ) : (
+              <p className="text-white">
                 {apiLimitCount} / {MAX_FREE_COUNTS} Voice Creations
               </p>
             )}
@@ -46,7 +57,7 @@ console.log(isPro)
             {isPro ? (
               <Progress
                 className="h-3"
-                value={(apiLimitCount / MAX_PRO_COUNTS) * 100}
+                value={(characterCount / MAX_CHARACTERS) * 100}
               />
             ) : (
               <Progress

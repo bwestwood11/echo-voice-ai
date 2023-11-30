@@ -53,8 +53,8 @@ const Hero = () => {
               Realistic AI <span className="text-[#ff8303]">Voices</span>{" "}
               Generated in Seconds
             </h2>
-            <p className="mt-6">
-              Create natural sounding voiceovers for your videos, podcasts, and more. Choose from a variety of voices and languages to find the perfect voice for your project. 
+            <p className="mt-6 text-gray-600 leading-7">
+              Create natural sounding voiceovers for your videos, podcasts, and more. Choose from over 50 different voices and languages to find the perfect one for you. 
             </p>
            {!session ? (
             <Button variant="orange" size="lg" className="mt-6">
@@ -64,15 +64,15 @@ const Hero = () => {
               <Button variant='orange' size='lg' className="mt-6">
                 Dashboard
               </Button>
-           )} 
+           )}
           </div>
-          <div className="basis-1/2 px-8 justify-center flex flex-col sm:flex-row gap-8 align-middle items-center">
+          <div className="basis-1/2 px-8 justify-center flex flex-row gap-8 align-middle items-center">
             <Image
               src="/Glinda-Image.png"
               alt="Hero Image"
               width={200}
               height={200}
-              className="rounded-xl cursor-pointer shadow-xl shadow-black hover:scale-105 transition-all duration-300"
+              className="rounded-xl cursor-pointer shadow-xl w-1/2 sm:w-full shadow-black hover:scale-105 transition-all duration-300"
               onClick={() => playAudio("/Glinda-Voice.mp3")}
             />
             <Image
@@ -80,7 +80,7 @@ const Hero = () => {
               alt="Hero Image"
               width={200}
               height={200}
-              className="rounded-xl cursor-pointer shadow-xl shadow-black hover:scale-105 transition-all duration-300"
+              className="rounded-xl cursor-pointer shadow-xl w-1/2 sm:w-full shadow-black hover:scale-105 transition-all duration-300"
               onClick={() => playAudio("/Clyde-Voice.mp3")}
             />
           </div>

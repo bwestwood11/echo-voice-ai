@@ -1,14 +1,15 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { blob } from "stream/consumers";
-import { increaseApiLimit, checkApiLimit, checkProApiLimit } from "@/lib/api-limit";
+import { increaseApiLimit, checkApiLimit, checkProApiLimit, increaseCharacterCount } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 
 export async function POST(req: Request) {
    const body = await req.json();
-   const { voiceID, text } = body;
+   const { voiceID, text, characterCount } = body;
    console.log(body);
    console.log(voiceID)
+   console.log('characterCount', characterCount)
 
    const freeTrial = await checkApiLimit();
    const isPro = await checkSubscription();
@@ -36,7 +37,7 @@ export async function POST(req: Request) {
             text: text,
             voice_settings: {
                 stability: 0.8,
-            similarity_boost: 0.9
+            similarity_boost: 0.9,
             }
    })
 
@@ -44,6 +45,7 @@ export async function POST(req: Request) {
 
     //  increase the api limit or counter if pro
     await increaseApiLimit();
+    await increaseCharacterCount(characterCount); 
 
     console.log(response.headers)
     const blob = await response.blob();

@@ -59,4 +59,25 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  audioFiles    AudioFile[] 
+}
+
+model AudioFile {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  fileName String
+  aiName String
+  url String
+  image String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ProUserCharacterLimit {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @unique
+  count Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -105,9 +105,16 @@ const voices = [
     audio: "/charlotteamericanvoice.mp3",
     flag: "/american.png",
   },
+  {
+    name: "Joanne",
+    voiceID: "JzxOoJpXoKVTtjCHhQhY",
+    accent: "American",
+    image: "/charlotteimage.png",
+    audio: "/joanne-voice.mp3",
+    flag: "/american.png",
+  },
 ];
 
-// Hi there! my name is Dorothy and I am an AI voice that is perfect for your social media content, audio books and more
 const VoicesPage = async () => {
   return (
     <div className="w-full text-center bg-slate-100">
@@ -118,8 +125,9 @@ const VoicesPage = async () => {
         Check out their voice by clicking on the audio button. If you like the
         voice, click on the image to start creating your content!
       </p>
-      {/* Code that maps through all the voices */}
-      <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 mt-10">
+
+      {/* Maps through all the voices */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 mt-10">
         {voices.map((voice) => (
           <div className="flex flex-col" key={voice.voiceID}>
             <Link

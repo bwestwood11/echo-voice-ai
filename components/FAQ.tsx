@@ -3,11 +3,30 @@ import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/react/24/outline'
 
 const faqs = [
   {
-    question: "What's the best thing about Switzerland?",
+    question: "Can I use these voices for commercial projects?",
     answer:
-      "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+      "Yes! You can use these voices for commercial projects. We have a free plan that allows you to generate 1000 characters per month. If you need more than that, you can upgrade to a paid plan.",
   },
-  // More questions...
+  {
+    question: "Can I use these voices for commercial projects?",
+    answer:
+      "Yes! You can use these voices for commercial projects. We have a free plan that allows you to generate 1000 characters per month. If you need more than that, you can upgrade to a paid plan.",
+  },
+  {
+    question: "Can I use these voices for commercial projects?",
+    answer:
+      "Yes! You can use these voices for commercial projects. We have a free plan that allows you to generate 1000 characters per month. If you need more than that, you can upgrade to a paid plan.",
+  },
+  {
+    question: "Can I use these voices for commercial projects?",
+    answer:
+      "Yes! You can use these voices for commercial projects. We have a free plan that allows you to generate 1000 characters per month. If you need more than that, you can upgrade to a paid plan.",
+  },
+  {
+    question: "Can I use these voices for commercial projects?",
+    answer:
+      "Yes! You can use these voices for commercial projects. We have a free plan that allows you to generate 1000 characters per month. If you need more than that, you can upgrade to a paid plan.",
+  },
 ]
 
 export default function FAQ() {

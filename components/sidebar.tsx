@@ -15,6 +15,7 @@ const montserrat = Montserrat({
 interface SidebarProps {
     apiLimitCount: number;
     isPro: boolean;
+    characterCount: number;
 }
 
 const routes = [
@@ -51,7 +52,7 @@ const routes = [
 
 ]
 
-const Sidebar = ({ apiLimitCount = 0, isPro = false }: SidebarProps) => {
+const Sidebar = ({ apiLimitCount = 0, isPro = false, characterCount = 0 }: SidebarProps) => {
    const pathname = usePathname()
 
     return (
@@ -82,7 +83,7 @@ const Sidebar = ({ apiLimitCount = 0, isPro = false }: SidebarProps) => {
                                  ))}
                     </div>
              </div>
-             <FreeCounter isPro={isPro} apiLimitCount={apiLimitCount}/>
+             <FreeCounter isPro={isPro} apiLimitCount={apiLimitCount} characterCount={characterCount}/>
         </div>
     )
 

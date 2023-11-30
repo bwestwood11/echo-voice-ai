@@ -29,16 +29,16 @@ export const authOptions:NextAuthOptions = {
             return session;
         },
         async jwt({ token, user, account, profile, isNewUser }:any) {
-        console.log("jwt callback token", token);
-        console.log("jwt callback user", user);
-        console.log("jwt callback account", account);
-        console.log("jwt callback profile", profile);
-        console.log("jwt callback isNewUser", isNewUser);
+        // console.log("jwt callback token", token);
+        // console.log("jwt callback user", user);
+        // console.log("jwt callback account", account);
+        // console.log("jwt callback profile", profile);
+        // console.log("jwt callback isNewUser", isNewUser);
             return token;
         },
         async signIn({ user, account, profile, email, credentials }: any) {
 
-            console.log("signIn callback", { user, account, profile, email, credentials });
+            // console.log("signIn callback", { user, account, profile, email, credentials });
             return true;
         },
     }, 

@@ -8,6 +8,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 
 const settings = absoluteUrl("/settings");
 
+// This route is for creating a checkout session or if a pro member then retrieves the billing portal session
 export async function GET() {
     try {
         const session = await getServerSession(authOptions);
@@ -22,6 +23,7 @@ export async function GET() {
             }
         });
 
+        // If the user has a subscription, redirect them to the billing portal
         if (userSubscription && userSubscription.stripeCustomerId) {
              const stripeSession = await stripe.billingPortal.sessions.create({
                 customer: userSubscription.stripeCustomerId,
@@ -31,6 +33,7 @@ export async function GET() {
             return new NextResponse(JSON.stringify({ url: stripeSession.url }));
         }
 
+        // Otherwise, create a new checkout session
         const stripeSession = await stripe.checkout.sessions.create({
             success_url: settings,
             cancel_url: settings,
