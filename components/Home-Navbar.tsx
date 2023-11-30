@@ -205,7 +205,7 @@ const NavigationBar = () => {
           <>
             <div className="sm:flex gap-3 hidden">
               <Button onClick={() => signIn("google")}>Sign In</Button>
-              <Button onClick={() => signIn()} variant="outline">
+              <Button onClick={() => signIn("google")} variant="outline">
                 Sign Up
               </Button>
             </div>
@@ -256,7 +256,10 @@ const NavigationBar = () => {
                         >
                           Sign In
                         </Button>
-                        <Button onClick={() => signIn()} variant="outline">
+                        <Button
+                          onClick={() => signIn("google")}
+                          variant="outline"
+                        >
                           Sign Up
                         </Button>
                       </div>

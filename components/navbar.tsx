@@ -12,19 +12,20 @@ import {
   } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getApiLimitCount } from "@/lib/api-limit";
+import { authOptions } from "@/utils/authOptions";
+import { getApiLimitCount, getCharacterCount } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 
 
 const Navbar = async () => {
   const apiLimitCount = await getApiLimitCount()
+  const characterCount = await getCharacterCount()
   const isPro = await checkSubscription()
    const session = await getServerSession(authOptions)
    console.log("session", session)
     return (
         <div className="flex items-center p-4 bg-slate-100">
-             <MobileSidebar isPro={isPro} apiLimitCount={apiLimitCount} />
+             <MobileSidebar isPro={isPro} apiLimitCount={apiLimitCount} characterCount={characterCount} />
              <div className="flex w-full justify-end">
              <DropdownMenu>
                 <DropdownMenuTrigger className="cursor-pointer" asChild>

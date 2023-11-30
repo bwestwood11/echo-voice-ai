@@ -1,5 +1,5 @@
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/utils/authOptions";
 import VideoProcessor from "@/components/FileUpload";
 import FileUpload from "@/components/file-upload";
 import { cn } from "@/lib/utils";

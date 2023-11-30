@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 import { Settings } from "lucide-react"
 import { SubscriptionButton } from "@/components/subscription-button"
 import { getServerSession } from "next-auth"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { authOptions } from "@/utils/authOptions"
 import { Badge } from "@/components/ui/badge"
 
 
