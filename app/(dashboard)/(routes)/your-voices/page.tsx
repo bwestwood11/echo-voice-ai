@@ -84,10 +84,10 @@ const Page = () => {
                 <span className="font-bold">The text typed:</span> <br />{" "}
                 {audio.text}
               </p>
-              <audio controls>
-                <source src={audio.url} type="audio/mp3" />
+              <audio controls src={audio.url} />
+                
                 Your browser does not support the audio element.
-              </audio>
+              
               <div className="flex flex-row gap-5 items-center">
                 <div className="flex flex-row gap-3">
                   <a
