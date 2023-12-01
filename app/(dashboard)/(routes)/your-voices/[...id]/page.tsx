@@ -78,7 +78,7 @@ export default function YourVoicesPage({
       body: audioBlob,
       headers: {
         "Content-Type": "audio/mpeg",
-        "x-amz-content-sha-256": "UNSIGNED-PAYLOAD",
+        // "x-amz-content-sha-256": "UNSIGNED-PAYLOAD",
       },
     });
 

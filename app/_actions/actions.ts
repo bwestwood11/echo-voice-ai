@@ -39,7 +39,7 @@ export async function getSignedURL({
   const putObjctCommand = new PutObjectCommand({
     Bucket: process.env.AWS_BUCKET_NAME!,
     Key: key,
-    ServerSideEncryption: "AES256",
+    // ServerSideEncryption: "AES256",
     Metadata: {
       userId: session.user.id,
       name: name,
