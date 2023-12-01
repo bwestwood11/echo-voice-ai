@@ -61,6 +61,8 @@ export async function getSignedURL({
     },
   });
 
+  console.log("newAudio", newAudio)
+
   return { success: { url: signedURL, audio: newAudio } };
 }
 
