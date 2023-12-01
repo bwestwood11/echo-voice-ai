@@ -81,6 +81,11 @@ export default function YourVoicesPage({
       },
     });
 
+    if(!response.ok) {
+      console.log("error", response);
+      return;
+    }
+    
     if(response.ok) {
        toast.success("Audio file saved to your dashboard");
     }
