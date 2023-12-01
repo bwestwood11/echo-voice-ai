@@ -39,6 +39,7 @@ export async function getSignedURL({
   const putObjctCommand = new PutObjectCommand({
     Bucket: process.env.AWS_BUCKET_NAME!,
     Key: key,
+    ServerSideEncryption: "AES256",
     Metadata: {
       userId: session.user.id,
       name: name,
@@ -47,7 +48,7 @@ export async function getSignedURL({
   });
 
   const signedURL = await getSignedUrl(s3, putObjctCommand, {
-    expiresIn: 60,
+    expiresIn: 3600,
   });
 
   console.log("signedURL", signedURL);
