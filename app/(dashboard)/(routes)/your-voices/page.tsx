@@ -49,10 +49,17 @@ const Page = () => {
   const handleDelete = async (id: string) => {
     try {
       const response = await deleteAudio({ audioId: id });
-
       setAudioFiles((prev) => prev.filter((audio) => audio.id !== id));
-    } catch (error) {
+    } catch (error: any) { // Explicitly specifying 'any' here, replace with the actual type
       console.error("Error deleting audio file:", error);
+  
+      // Log the digest property for more details
+      console.error("Error digest:", (error as any).digest);
+  
+      // Optionally, you can log additional details from the error
+      if ((error as any).details) {
+        console.error("Error details:", (error as any).details);
+      }
     }
   };
 

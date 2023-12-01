@@ -50,6 +50,8 @@ export async function getSignedURL({
     expiresIn: 60,
   });
 
+  console.log("signedURL", signedURL);
+
   const newAudio = await prismadb.audioFile.create({
     data: {
       userId: session.user.id,
