@@ -22,9 +22,11 @@ const s3 = new S3Client({
 export async function getSignedURL({
   name,
   correctImagePath,
+  text
 }: {
   name: string;
   correctImagePath: string;
+  text: string
 }) {
   // Get the user's session
   const session = await getServerSession(authOptions);
@@ -55,6 +57,7 @@ export async function getSignedURL({
       fileName: `${timestamp}_audioFile.mp3`,
       image: correctImagePath,
       aiName: name,
+      text: text
     },
   });
 

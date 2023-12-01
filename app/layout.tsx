@@ -6,6 +6,7 @@ import { Inter } from 'next/font/google'
 import Provider from '@/context/Provider'
 import ModalProvider from '@/components/modal-provider'
 import 'regenerator-runtime/runtime'
+import ToastProvider from '@/context/ToastProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,6 +26,7 @@ export default function RootLayout({
     <html lang="en">
      <Provider session={session}>
       <body className={inter.className}>
+        <ToastProvider />
         <ModalProvider />
         {children}
         </body>

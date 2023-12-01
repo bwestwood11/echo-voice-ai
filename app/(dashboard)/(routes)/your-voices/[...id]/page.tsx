@@ -12,6 +12,7 @@ import { Download } from "lucide-react";
 import { ImSpinner3 } from "react-icons/im";
 import { getSignedURL } from "@/app/_actions/actions";
 import { MAX_CHARACTERS } from "@/constants";
+import { toast } from "react-hot-toast";
 
 const montserrat = Montserrat({
   weight: "600",
@@ -63,7 +64,7 @@ export default function YourVoicesPage({
   const handleAudioUploadtoS3 = async (audioBlob: Blob) => {
     console.log("audioBlob", audioBlob);
 
-    const signedURLResult = await getSignedURL({ name, correctImagePath });
+    const signedURLResult = await getSignedURL({ name, correctImagePath, text:voice });
     console.log("signedURL", signedURLResult);
     if (!signedURLResult.success) {
       console.log("error", signedURLResult.error);
@@ -79,6 +80,10 @@ export default function YourVoicesPage({
         "Content-Type": "audio/mpeg",
       },
     });
+
+    if(response.ok) {
+       toast.success("Audio file saved to your dashboard");
+    }
 
     console.log("response", response);
 

@@ -121,7 +121,7 @@ const VoicesPage = async () => {
       <h1 className={cn("font-extrabold text-3xl px-8", montserrat.className)}>
         Pick the voice you would like to try!
       </h1>
-      <p className="mt-4 text-gray-500 px-12">
+      <p className="mt-4 px-12">
         Check out their voice by clicking on the audio button. If you like the
         voice, click on the image to start creating your content!
       </p>
