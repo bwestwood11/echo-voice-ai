@@ -123,7 +123,7 @@ const VoicesPage = async () => {
       </h1>
       <p className="mt-4 px-12">
         Check out their voice by clicking on the audio button. If you like the
-        voice, click on the image to start creating your content!
+        voice, click on their image to start creating your content!
       </p>
 
       {/* Maps through all the voices */}
