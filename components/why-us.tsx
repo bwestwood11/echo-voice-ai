@@ -29,7 +29,7 @@ const WhyUs = () => {
     <div className="w-full h-full mt-20">
     <div className="max-w-7xl mx-auto text-center px-6">
         <h3 className={cn(montserrat.className, "mb-6")}>Voice Fusion <span className="text-[#ff8303]">Benefits</span></h3>
-    <p className="font-base max-w-xl mx-auto text-gray-600">The most natural sounding AI voices to generate amazing content for your business, YouTube channel, podcast, </p>
+    <p className="font-base max-w-xl mx-auto text-gray-600">The most natural sounding AI voices to generate amazing content for your business, YouTube channel, podcast, and more </p>
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-16 mt-10 px-10">
     {benefits.map((benefit) => (
       <div key={benefit.title}>
