@@ -4,14 +4,10 @@ import { montserrat } from "@/app/fonts";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useState } from "react";
-import VideoPlayer from "./VideoPlayer";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { IoMdPlay } from "react-icons/io";
@@ -22,37 +18,43 @@ const examples = [
     title: "Advertisements",
     thumbnail: "/warehouse-thumbnail.png",
     video:
-      '<iframe width="560" height="315" src="https://www.youtube.com/embed/WKsPfdV-1SQ?si=mQtSTnOcgfarmoRD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+      '<iframe title="vimeo-player" src="https://player.vimeo.com/video/890725328?badge=0&amp;autopause=0&amp;quality_selector=1&amp;player_id=0&amp;app_id=58479" width="540" height="360"></iframe>',
+    avatar: '/appliance-plug-logo.png',
     owner: "The Appliance Plug",
   },
   {
     title: "Advertisements",
     thumbnail: "/warehouse-thumbnail.png",
     video: "/warehouse.mp4",
+    avatar: '/appliance-plug-logo.png',
     owner: "The Appliance Plug",
   },
   {
     title: "Advertisements",
     thumbnail: "/warehouse-thumbnail.png",
     video: "/warehouse.mp4",
+    avatar: '/appliance-plug-logo.png',
     owner: "The Appliance Plug",
   },
   {
     title: "Advertisements",
     thumbnail: "/warehouse-thumbnail.png",
     video: "/warehouse.mp4",
+    avatar: '/appliance-plug-logo.png',
     owner: "The Appliance Plug",
   },
   {
     title: "Advertisements",
     thumbnail: "/warehouse-thumbnail.png",
     video: "/warehouse.mp4",
+    avatar: '/appliance-plug-logo.png',
     owner: "The Appliance Plug",
   },
   {
     title: "Advertisements",
     thumbnail: "/warehouse-thumbnail.png",
     video: "/warehouse.mp4",
+    avatar: '/appliance-plug-logo.png',
     owner: "The Appliance Plug",
   },
 ];
@@ -94,10 +96,8 @@ const UseCases = () => {
                     </div>
                   </div>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-5xl w-screen bg-transparent">
-                  <div className="mt-6 w-full">
-                    <VideoPlayer videoSrc={example.video} />
-                  </div>
+                <DialogContent className="sm:max-w-screen-sm w-screen bg-transparent">
+                  <div className="mt-6 w-full" dangerouslySetInnerHTML={{ __html: example.video }} />
                 </DialogContent>
               </Dialog>
               <div className="flex w-full justify-between mt-4">
@@ -106,7 +106,7 @@ const UseCases = () => {
               </div>
               <div className="flex gap-3 w-full">
                 <Image
-                  src="/use-cases/appliance-plug.png"
+                  src={example.avatar ?? example.thumbnail}
                   alt="user"
                   width="40"
                   height="40"

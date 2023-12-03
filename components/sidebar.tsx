@@ -38,7 +38,7 @@ const routes = [
         color: "text-[#ff8303]",
     },
     {
-        label: "Your Voices",
+        label: "Saved Voices",
         icon: Volume1Icon,
         href: "/your-voices",
         color: "text-[#ff8303]",

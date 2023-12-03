@@ -92,8 +92,6 @@ const Page = () => {
                 {audio.text}
               </p>
               <audio controls src={audio.url} />
-                
-                Your browser does not support the audio element.
               
               <div className="flex flex-row gap-5 items-center">
                 <div className="flex flex-row gap-3">
@@ -118,7 +116,7 @@ const Page = () => {
                       </p>
                       <div className="flex gap-6 mt-6">
                         <button
-                          className="bg-green-500 hover:bg-green-500/70 text-white p-2 rounded-md"
+                          className="bg-red-500 hover:bg-red-500/70 text-white p-2 rounded-md"
                           onClick={() => handleDelete(audio.id)}
                         >
                           Yes

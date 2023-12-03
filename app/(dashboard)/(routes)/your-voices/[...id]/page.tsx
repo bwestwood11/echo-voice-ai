@@ -30,6 +30,7 @@ export default function YourVoicesPage({
   const [voice, setVoice] = useState("");
   const [response, setResponse] = useState<Blob | "">("");
   const [converting, setConverting] = useState(false);
+  const [loading, setLoading] = useState(false); 
   const [characterCount, setCharacterCount] = useState(0);
 
   // console.log("params", params);
@@ -63,7 +64,7 @@ export default function YourVoicesPage({
   // Upload and save Audio to S3 bucket & database
   const handleAudioUploadtoS3 = async (audioBlob: Blob) => {
     console.log("audioBlob", audioBlob);
-
+  setLoading(true);
     const signedURLResult = await getSignedURL({ name, correctImagePath, text:voice });
     console.log("signedURL", signedURLResult);
     if (!signedURLResult.success) {
@@ -88,6 +89,7 @@ export default function YourVoicesPage({
     }
     
     if(response.ok) {
+      setLoading(false);
        toast.success("Audio file saved to your dashboard");
     }
 
@@ -138,16 +140,8 @@ export default function YourVoicesPage({
   return (
     <div className="flex w-full h-screen bg-slate-100">
       <div className="max-w-7xl mx-auto flex flex-col">
-        <h1
-          className={cn(
-            "mt-10 font-bold text-center text-4xl mb-10",
-            montserrat.className
-          )}
-        >
-          Your Voices
-        </h1>
         <div className="flex flex-col mb-8">
-          <Image src={correctImagePath} alt="name" width={250} height={250} />
+          <Image src={correctImagePath} alt="name" width={350} height={350} />
           <div className="flex flex-row gap-2 mx-auto mb-6 items-center">
             <h3 className="font-semibold text-2xl">{name}</h3>
             <Image src={correctFlagPath} alt="flag" width={50} height={50} />
@@ -201,6 +195,10 @@ export default function YourVoicesPage({
               onClick={() => handleAudioUploadtoS3(response)}
             >
               Save to Your Dashboard
+              {loading && (
+                <span className="animate-spin text-lg ml-3">
+                  <ImSpinner3 />
+                </span>)}
             </Button>
             </div>
          

@@ -6,7 +6,8 @@ import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import Link from "next/link";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -57,13 +58,15 @@ const Hero = () => {
               Create natural sounding voiceovers for your videos, podcasts, and more. Choose from over 50 different voices and languages to find the perfect one for you. 
             </p>
            {!session ? (
-            <Button variant="orange" size="lg" className="mt-6">
+            <Button onClick={() => signIn('google')} variant="orange" size="lg" className="mt-6">
               Get Started
             </Button>
            ) : (
+            <Link href="/dashboard">
               <Button variant='orange' size='lg' className="mt-6">
                 Dashboard
               </Button>
+            </Link>
            )}
           </div>
           <div className="basis-1/2 px-8 justify-center flex flex-row gap-8 align-middle items-center">
