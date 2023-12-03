@@ -5,6 +5,7 @@ import LogoClouds from "@/components/Logos"
 import Hero from "@/components/Hero"
 import VideoSection from "@/components/Video-Example"
 import WhyUs from "@/components/why-us"
+import UseCases from "@/components/UseCases"
 
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
           <LogoClouds />
           <VideoSection />
           <WhyUs />
+          <UseCases />
           <FAQ />
         </>
     )
