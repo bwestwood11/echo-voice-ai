@@ -2,6 +2,15 @@ import { cn } from "@/lib/utils";
 import { Montserrat } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
+
+const metadata: Metadata = {
+  title: "Voices",
+  description: "Select from a variety of voices to create your content!",
+  alternates: {
+    canonical: "https://www.voicefusion.io/voices",
+  },
+};
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -125,7 +134,7 @@ const VoicesPage = async () => {
         Check out their voice by clicking on the audio button. If you like the
         voice, click on their image to start creating your content!
       </p>
-      
+
       {/* Maps through all the voices */}
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 mt-10">
         {voices.map((voice) => (

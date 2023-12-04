@@ -11,8 +11,14 @@ import ToastProvider from '@/context/ToastProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Voice Fusion',
-  description: 'AI Generated voices for your videos', 
+  title: {
+    template: '%s | Voice Fusion',
+    default: 'Voice Fusion'
+  },
+  description: 'AI Generated voices for your content creation!', 
+  alternates: {
+    canonical: 'https://voicefusion.io',
+  }
 }
 
 export default function RootLayout({
