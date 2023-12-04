@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.voicefusion.io
+
+# Sitemaps
+Sitemap: https://www.voicefusion.io/sitemap.xml

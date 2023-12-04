@@ -4,7 +4,6 @@ import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Montserrat } from "next/font/google";
-import { cn } from "@/lib/utils";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useProModal } from "@/hooks/use-pro-modal";
