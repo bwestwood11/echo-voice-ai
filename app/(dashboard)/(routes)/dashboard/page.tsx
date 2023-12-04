@@ -5,11 +5,19 @@ import FileUpload from "@/components/file-upload";
 import { cn } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 import { Montserrat } from "next/font/google";
-
+import { Metadata } from "next";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
 });
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Upload a file to be processed!",
+  alternates: {
+    canonical: "https://www.voicefusion.io/dashboard",
+  },
+};
 
 const DashboardPage = async () => {
   const session = await getServerSession(authOptions);

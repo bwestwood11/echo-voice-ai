@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   title: "Voices",
   description: "Select from a variety of voices to create your content!",
   alternates: {
@@ -140,7 +140,7 @@ const VoicesPage = async () => {
         {voices.map((voice) => (
           <div className="flex flex-col" key={voice.voiceID}>
             <Link
-              href={`/your-voices/${voice.voiceID}&image=${voice.image}&name=${voice.name}&flag=${voice.flag}`}
+              href={`/voices/${voice.voiceID}&image=${voice.image}&name=${voice.name}&flag=${voice.flag}`}
             >
               <Image
                 className="mx-auto cursor-pointer hover:border-2 hover:border-gray-100 hover:rounded-lg"

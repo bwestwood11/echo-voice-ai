@@ -10,6 +10,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Download } from "lucide-react";
+import { ImSpinner3 } from "react-icons/im";
+import toast from "react-hot-toast";
 
 type AudioFile = {
   id: string;
@@ -23,8 +25,9 @@ type AudioFile = {
   updatedAt: string;
 };
 
-const Page = () => {
+const YourVoices = () => {
   const [audioFiles, setAudioFiles] = useState<AudioFile[]>([]);
+  const [loading, setLoading] = useState(false);
 
   //
   useEffect(() => {
@@ -48,14 +51,18 @@ const Page = () => {
 
   const handleDelete = async (id: string) => {
     try {
+      setLoading(true);
       const response = await deleteAudio({ audioId: id });
       setAudioFiles((prev) => prev.filter((audio) => audio.id !== id));
-    } catch (error: any) { // Explicitly specifying 'any' here, replace with the actual type
+      setLoading(false);
+      toast.success("Successfully deleted audio file");
+    } catch (error: any) {
+      // Explicitly specifying 'any' here, replace with the actual type
       console.error("Error deleting audio file:", error);
-  
+
       // Log the digest property for more details
       console.error("Error digest:", (error as any).digest);
-  
+
       // Optionally, you can log additional details from the error
       if ((error as any).details) {
         console.error("Error details:", (error as any).details);
@@ -92,7 +99,7 @@ const Page = () => {
                 {audio.text}
               </p>
               <audio controls src={audio.url} />
-              
+
               <div className="flex flex-row gap-5 items-center">
                 <div className="flex flex-row gap-3">
                   <a
@@ -114,12 +121,17 @@ const Page = () => {
                       <p className="text-gray-600">
                         Are you sure you want to delete this audio file?
                       </p>
-                      <div className="flex gap-6 mt-6">
+                      <div className="flex flex-row whitespace-nowrap gap-6 mt-6">
                         <button
-                          className="bg-red-500 hover:bg-red-500/70 text-white p-2 rounded-md"
+                          className="bg-red-500 hover:bg-red-500/70 text-white p-2 flex items-center rounded-md"
                           onClick={() => handleDelete(audio.id)}
                         >
-                          Yes
+                          Yes{" "}
+                          {loading && (
+                            <span className="animate-spin text-lg ml-3">
+                              <ImSpinner3 />
+                            </span>
+                          )}
                         </button>
                       </div>
                     </div>
@@ -134,4 +146,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default YourVoices;

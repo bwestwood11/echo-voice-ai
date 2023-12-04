@@ -40,7 +40,7 @@ const routes = [
     {
         label: "Saved Voices",
         icon: Volume1Icon,
-        href: "/your-voices",
+        href: "/saved-voices",
         color: "text-[#ff8303]",
     },
     {

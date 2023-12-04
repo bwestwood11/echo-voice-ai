@@ -12,14 +12,15 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Voice Fusion',
-    default: 'Voice Fusion'
+    template: '%s | VoiceFusion',
+    default: 'VoiceFusion',
   },
-  description: 'AI Generated voices for your content creation!', 
+  description: 'AI Generated voices for your videos', 
   alternates: {
-    canonical: 'https://voicefusion.io',
+    canonical: 'https://www.voicefusion.io',
   }
 }
+
 
 export default function RootLayout({
   children,
