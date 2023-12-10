@@ -70,3 +70,12 @@
     transform: translateX(-100%);
   }
 }
+
+@media screen and (max-width: 425px) {
+  .wrapper:before {
+      width: 100px;
+  }
+  .wrapper:after {
+      width: 100px;
+  }
+}
