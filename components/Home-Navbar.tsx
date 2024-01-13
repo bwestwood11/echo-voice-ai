@@ -282,16 +282,16 @@ const NavigationBar = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="mt-4 mr-1 z-10">
                 <DropdownMenuItem className="mb-2 mt-2">
-                  <Link href={`/dashboard`}>Dashboard</Link>
+                  <Link href='/dashboard'>Dashboard</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="mb-2 mt-2">
                   <Link href={`/dashboard`}>Your Account</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="mb-2 mt-2">
-                  <Link href={`/dashboard`}>Settings</Link>
+                  <Link href='/settings'>Settings</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="mb-2 mt-2">
-                  <Button onClick={() => signingOut()} variant="ghost">
+                  <Button onClick={signingOut} variant="ghost">
                     Sign out
                   </Button>
                 </DropdownMenuItem>

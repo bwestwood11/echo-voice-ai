@@ -55,12 +55,14 @@ const Hero = () => {
               Generated in Seconds
             </h2>
             <p className="mt-6 text-gray-600 leading-7">
-              Create natural sounding voiceovers for your videos, podcasts, and more. Choose from over 50 different voices and languages to find the perfect one for you. 
+              Create natural sounding voice overs for your videos, podcasts, and more. Choose from over 50 different voices and languages to find the perfect one for you. 
             </p>
            {!session ? (
-            <Button onClick={() => signIn('google')} variant="orange" size="lg" className="mt-6">
+            <Link href="/auth/register">
+            <Button variant="orange" size="lg" className="mt-6">
               Get Started
             </Button>
+            </Link>
            ) : (
             <Link href="/dashboard">
               <Button variant='orange' size='lg' className="mt-6">

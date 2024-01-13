@@ -20,6 +20,7 @@ import { register } from "@/actions/register";
 import { FormSuccess } from "../form-success";
 import { FormError } from "../form-error";
 
+
 const RegisterForm = () => {
 const [success, setSuccess] = useState<string | undefined>("");
 const [error, setError] = useState<string | undefined>("");
@@ -97,6 +98,23 @@ const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input 
+                  {...field}
+                  placeholder="******"
+                  type="password"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+            />
+            <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
                   <Input 
                   {...field}

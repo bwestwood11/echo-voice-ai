@@ -60,7 +60,7 @@ const EditSettingsPage = () => {
         });
       };
 
-      return (<div className="h-screen flex justify-center items-center">
+      return (<div className="h-screen bg-slate-100 flex justify-center items-center">
         <Card className="w-1/2 mx-auto items-center justify-center">
           <CardHeader>
             <p className="text-2xl font-semibold text-center">Edit Your Profile</p>
