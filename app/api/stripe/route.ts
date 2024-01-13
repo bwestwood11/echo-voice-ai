@@ -38,7 +38,7 @@ export async function GET() {
             cancel_url: settings,
             payment_method_types: ["card"],
             mode: "subscription",
-            customer_email: session.email,
+            customer_email: session.email ?? '',
             line_items: [
                   {
                     price: process.env.STRIPE_PRICE_ID,
