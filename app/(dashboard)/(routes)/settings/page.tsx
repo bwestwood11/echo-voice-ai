@@ -2,10 +2,11 @@ import { checkSubscription, subscriptionData } from "@/lib/subscription";
 import { cn } from "@/lib/utils";
 import { Settings } from "lucide-react";
 import { SubscriptionButton } from "@/components/subscription-button";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/utils/authOptions";
 import { Badge } from "@/components/ui/badge";
 import { Metadata } from "next";
+import { currentUser } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Settings",
@@ -17,7 +18,8 @@ export const metadata: Metadata = {
 
 const SettingsPage = async () => {
   const isPro = await checkSubscription();
-  const session = await getServerSession(authOptions);
+  const session = await currentUser();
+  console.log('session object', session)
   const subscription = await subscriptionData();
   console.log("single subscription", subscription);
   return (
@@ -49,7 +51,7 @@ const SettingsPage = async () => {
                 Full name
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {session?.user.name}
+                {session?.name}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -57,7 +59,7 @@ const SettingsPage = async () => {
                 Email Address
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {session?.user.email}
+                {session?.email}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -91,7 +93,12 @@ const SettingsPage = async () => {
                 {isPro ? "$19.99" : "$0"}
               </dd>
             </div>
-          </dl>
+          </dl>{" "}
+        {session?.isOAuth ? (
+         null 
+        ):(<> 
+          <Link href='/settings/edit'><Button>Edit Profile</Button></Link> 
+          </>)}
         </div>
       </div>
     </div>

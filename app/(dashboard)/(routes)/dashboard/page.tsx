@@ -1,9 +1,5 @@
-'use client'
+"use client";
 
-
-import VideoProcessor from "@/components/FileUpload";
-import FileUpload from "@/components/file-upload";
-import { cn } from "@/lib/utils";
 import { Montserrat } from "next/font/google";
 import { useState } from "react";
 import AvatarComponent from "@/components/AvatarComponent";
@@ -13,7 +9,7 @@ import { ImSpinner3 } from "react-icons/im";
 import { useProModal } from "@/hooks/use-pro-modal";
 import { useRouter } from "next/navigation";
 import { Download } from "lucide-react";
-import { getSignedURL } from "@/app/_actions/actions";
+import { getSignedURL } from "@/actions/actions";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -144,73 +140,79 @@ const voices = [
   },
 ];
 
-
-
 const DashboardPage = () => {
-  const [selectedVoiceID, setSelectedVoiceID] = useState('');
-  const [text, setText] = useState('');
+  const [selectedVoiceID, setSelectedVoiceID] = useState("");
+  const [text, setText] = useState("");
   const [converting, setConverting] = useState(false);
   const [response, setResponse] = useState<Blob | "">("");
   const [characterCount, setCharacterCount] = useState(0);
-  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   const proModal = useProModal();
 
-    // Create the audio from the user's input text
-    const handleVoiceInput = async () => {
-      try {
-        setConverting(true);
-        const response = await fetch("/api/voice-creation", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            voiceID: selectedVoiceID,
-            text: text,
-            characterCount: characterCount,
-          }),
-        });
-  
-        if (!response.ok) {
-          if (response.status === 403) {
-            setConverting(false);
-            proModal.onOpen();
-          } else {
-            console.log("Unexpected response status:", response.status);
-          }
-          return; // Stop further processing
-        }
-  
-        const blobResponse = await response.blob();
-        setResponse(blobResponse);
-      } catch (error: any) {
-        console.log("error", error);
-        if (error?.response?.status === 403) {
+  // Create the audio from the user's input text
+  const handleVoiceInput = async () => {
+    try {
+      setConverting(true);
+      const response = await fetch("/api/voice-creation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          voiceID: selectedVoiceID,
+          text: text,
+          characterCount: characterCount,
+        }),
+      });
+
+      if (!response.ok) {
+        if (response.status === 403) {
+          setConverting(false);
           proModal.onOpen();
+        } else {
+          console.log("Unexpected response status:", response.status);
         }
-      } finally {
-        setConverting(false);
-        router.refresh();
+        return; // Stop further processing
       }
-    };
+
+      const blobResponse = await response.blob();
+      setResponse(blobResponse);
+    } catch (error: any) {
+      console.log("error", error);
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      }
+    } finally {
+      setConverting(false);
+      router.refresh();
+    }
+  };
 
   return (
-    <div className="w-full h-screen bg-slate-100">  
-    <h4 className="font-bold text-sm mb-6">Choose Your AI Character</h4>
-     <div className="max-w-7xl"> 
-      <div className="grid grid-rows-[20px_500px_1fr] grid-cols-[200px_1fr_100px] px-20">
-        <div className="row-span-2 flex flex-col">
-          <AvatarComponent voices={voices} setSelectedVoiceID={setSelectedVoiceID} selectedVoiceID={selectedVoiceID} />
-        </div>
-        <div className="row-span-2 flex flex-col">
-          <InputText setText={setText} text={text} characterCount={characterCount} setCharacterCount={setCharacterCount} />
-        </div>
-        <div className="row-span-2 flex flex-col">
-        <Button
-        onClick={handleVoiceInput}
-        >
+    <div className="w-full h-screen bg-slate-100">
+      <h4 className="h2-bold text-center">
+        Choose Your <span className="text-[#ff8303]">AI Character</span>
+      </h4>
+      <div className="max-w-7xl mx-auto mt-20">
+        <div className="lg:grid lg:grid-rows-[20px_500px_1fr] lg:grid-cols-[200px_1fr_100px] lg:px-20 px-10 flex flex-col gap-2">
+          <div className="row-span-2 flex flex-col">
+            <AvatarComponent
+              voices={voices}
+              setSelectedVoiceID={setSelectedVoiceID}
+              selectedVoiceID={selectedVoiceID}
+            />
+          </div>
+          <div className="row-span-2 flex flex-col">
+            <InputText
+              setText={setText}
+              text={text}
+              characterCount={characterCount}
+              setCharacterCount={setCharacterCount}
+            />
+          </div>
+          <div className="row-span-2 flex flex-col">
+            <Button onClick={handleVoiceInput} size="lg">
               Generate
               {converting && (
                 <span className="animate-spin text-lg ml-3">
@@ -218,18 +220,15 @@ const DashboardPage = () => {
                 </span>
               )}
             </Button>
+          </div>
         </div>
       </div>
-     </div>
-     {response && (
-          <>
-            <audio
-              src={response ? URL.createObjectURL(response) : ""}
-              controls
-            />
-            {/* <source ref={sourceElem} src={response} type="audio/mpeg" /> */}
-            <div className="flex flex-row gap-6 items-center mt-10">
-                 <a
+      {response && (
+        <>
+          <audio src={response ? URL.createObjectURL(response) : ""} controls />
+          {/* <source ref={sourceElem} src={response} type="audio/mpeg" /> */}
+          <div className="flex flex-row gap-6 items-center mt-10">
+            <a
               className="flex items-center gap-4"
               href={response ? URL.createObjectURL(response) : ""}
               download
@@ -244,7 +243,7 @@ const DashboardPage = () => {
               ) : (
                 ""
               )}
-            </a> 
+            </a>
             {/* <Button variant={'outline'}
               onClick={() => handleAudioUploadtoS3(response)}
             >
@@ -254,11 +253,9 @@ const DashboardPage = () => {
                   <ImSpinner3 />
                 </span>)}
             </Button> */}
-            </div>
-         
-           
-          </>
-        )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

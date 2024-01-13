@@ -7,8 +7,7 @@ import { cn } from "@/lib/utils";
 import { LayoutDashboard, Volume2Icon, Activity, Settings, Volume1Icon } from "lucide-react";
 import { usePathname } from "next/navigation";
 import FreeCounter from "./FreeCounter";
-import { useSession } from "next-auth/react";
-import { AiOutlineCaretDown } from "react-icons/ai";
+import { useCurrentUser } from "@/hooks/use-current-user";
 import { Badge } from "./ui/badge";
 
 
@@ -59,7 +58,7 @@ const routes = [
 const Sidebar = ({ apiLimitCount = 0, isPro = false, characterCount = 0 }: SidebarProps) => {
    const pathname = usePathname()
 
-   const { data: session } = useSession()
+   const session = useCurrentUser();
 
     return (
         <div className="space-y-4 py-4 flex flex-col h-full bg-slate-900 text-white">
@@ -79,16 +78,16 @@ const Sidebar = ({ apiLimitCount = 0, isPro = false, characterCount = 0 }: Sideb
                    {session && 
                    <div className="flex flex-row gap-2 mb-10 items-start w-full p-4">
                         <Image
-                        src={session.user.image}
+                        src={session?.image ?? ""}
                         alt="avatar"
                         width={30}
                         height={30}
                         className="rounded-full"
                         />
                         <div className="flex flex-col gap-1">
-                             <h4>{session.user.name}</h4>
-                             {isPro && <Badge className="bg-[#ff8303] hover:bg-[#ff8303]/80 inline-flex w-1/3 text-white font-bold">Pro</Badge>}
-                             {!isPro && <Badge className="bg-[#ff8303] hover:bg-[#ff8303]/80 inline-flex w-1/3 text-white font-bold">Free</Badge>}
+                             <h4>{session.name}</h4>
+                             {isPro && <Badge className="bg-[#ff8303] hover:bg-[#ff8303]/80 inline-flex w-full text-white font-bold">Pro</Badge>}
+                             {!isPro && <Badge className="bg-[#ff8303] hover:bg-[#ff8303]/80 inline-flex w-full text-white font-bold">Free</Badge>}
                         </div>
                     </div>
                     }

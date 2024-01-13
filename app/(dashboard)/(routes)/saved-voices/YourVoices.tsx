@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { BsTrash } from "react-icons/bs";
-import { deleteAudio } from "@/app/_actions/actions";
+import { deleteAudio } from "@/actions/actions";
 import {
   Popover,
   PopoverContent,
@@ -101,15 +101,6 @@ const YourVoices = () => {
               <audio controls src={audio.url} />
 
               <div className="flex flex-row gap-5 items-center">
-                <div className="flex flex-row gap-3">
-                  <a
-                    className="bg-black hover:bg-black/70 p-3 rounded-full"
-                    href={audio.url}
-                    download={`${audio.url}`}
-                  >
-                    <Download size={16} className="text-white" />{" "}
-                  </a>
-                </div>
                 <Popover>
                   <PopoverTrigger asChild>
                     <button className="bg-red-500 hover:bg-red-500/70 p-3 rounded-full">

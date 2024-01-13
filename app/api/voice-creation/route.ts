@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { blob } from "stream/consumers";
 import {
   increaseApiLimit,
   checkApiLimit,

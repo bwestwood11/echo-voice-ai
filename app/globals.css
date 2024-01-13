@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
  
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -77,10 +79,14 @@
   }
 }
 
-h3 {
+.h3 {
   @apply font-extrabold text-4xl uppercase
 }
 
-p {
+.p {
   @apply text-gray-600
+}
+
+.h2-bold {
+  @apply font-bold text-[32px] leading-[40px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px];
 }

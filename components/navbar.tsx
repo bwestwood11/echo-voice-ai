@@ -1,65 +1,65 @@
-
-
 import MobileSidebar from "@/components/mobile-sidebar";
 import Link from "next/link";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/utils/authOptions";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getApiLimitCount, getCharacterCount } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
-
+import { User2Icon } from "lucide-react";
+import { currentUser } from "@/lib/auth";
+import { logout } from "@/actions/logout";
 
 const Navbar = async () => {
-  const apiLimitCount = await getApiLimitCount()
-  const characterCount = await getCharacterCount()
-  const isPro = await checkSubscription()
-   const session = await getServerSession(authOptions)
-   console.log("session", session)
-    return (
-        <div className="flex items-center p-4 bg-slate-100">
-             <MobileSidebar isPro={isPro} apiLimitCount={apiLimitCount} characterCount={characterCount} />
-             <div className="flex w-full justify-end">
-             <DropdownMenu>
-                <DropdownMenuTrigger className="cursor-pointer" asChild>
-                        <Avatar>
-                   <AvatarImage src={session?.user.image} />
-  <AvatarFallback>CN</AvatarFallback>
+  const apiLimitCount = await getApiLimitCount();
+  const characterCount = await getCharacterCount();
+  const isPro = await checkSubscription();
+  const session = await currentUser();
+  console.log("session", session);
+
+  const signingOut = () => {
+   logout()
+  };
+  return (
+    <div className="flex items-center p-4 bg-slate-100">
+      <MobileSidebar
+        isPro={isPro}
+        apiLimitCount={apiLimitCount}
+        characterCount={characterCount}
+      />
+      <div className="flex w-full justify-end">
+        <DropdownMenu>
+          <DropdownMenuTrigger className="cursor-pointer" asChild>
+            <Avatar>
+              <AvatarImage src={session?.image ?? ''} />
+              <AvatarFallback>
+                <User2Icon />
+              </AvatarFallback>
             </Avatar>
-                </DropdownMenuTrigger>
-       <DropdownMenuContent className="mt-4 mr-1 z-10">
-       <DropdownMenuItem className='mb-2 mt-2'>
-                  <Link href='/dashboard'>
-                    Dashboard
-                  </Link>
-                </DropdownMenuItem>
-       <DropdownMenuItem className='mb-2 mt-2'>
-                  <Link href='/dashboard'>
-                    Your Account
-                  </Link>
-                </DropdownMenuItem>
-       <DropdownMenuItem className='mb-2 mt-2'>
-                  <Link href='/settings'>
-                    Settings
-                  </Link>
-                </DropdownMenuItem>
-                <Link href={'/signout'}>
-       <DropdownMenuItem className='mb-2 mt-2'>
-                  Sign out
-                </DropdownMenuItem>
-                </Link>
-       </DropdownMenuContent>
-            </DropdownMenu>
-             </div>
-        </div>
-    )
-}
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="mt-4 mr-1 z-10">
+            <DropdownMenuItem className="mb-2 mt-2">
+              <Link href="/dashboard">Dashboard</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="mb-2 mt-2">
+              <Link href="/dashboard">Your Account</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="mb-2 mt-2">
+              <Link href="/settings">Settings</Link>
+            </DropdownMenuItem>   
+            <DropdownMenuItem className="my-2">
+                Sign out
+              </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </div>
+  );
+};
 
 export default Navbar;

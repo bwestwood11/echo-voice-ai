@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useProModal } from "@/hooks/use-pro-modal";
 import { Download } from "lucide-react";
 import { ImSpinner3 } from "react-icons/im";
-import { getSignedURL } from "@/app/_actions/actions";
+import { getSignedURL } from "@/actions/actions";
 import { MAX_CHARACTERS } from "@/constants";
 import { toast } from "react-hot-toast";
 
@@ -29,7 +29,7 @@ export default function YourVoicesPage({
   const [voice, setVoice] = useState("");
   const [response, setResponse] = useState<Blob | "">("");
   const [converting, setConverting] = useState(false);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const [characterCount, setCharacterCount] = useState(0);
 
   // console.log("params", params);
@@ -63,8 +63,12 @@ export default function YourVoicesPage({
   // Upload and save Audio to S3 bucket & database
   const handleAudioUploadtoS3 = async (audioBlob: Blob) => {
     console.log("audioBlob", audioBlob);
-  setLoading(true);
-    const signedURLResult = await getSignedURL({ name, correctImagePath, text:voice });
+    setLoading(true);
+    const signedURLResult = await getSignedURL({
+      name,
+      correctImagePath,
+      text: voice,
+    });
     console.log("signedURL", signedURLResult);
     if (!signedURLResult.success) {
       console.log("error", signedURLResult.error);
@@ -82,18 +86,17 @@ export default function YourVoicesPage({
       },
     });
 
-    if(!response.ok) {
+    if (!response.ok) {
       console.log("error", response);
       return;
     }
-    
-    if(response.ok) {
+
+    if (response.ok) {
       setLoading(false);
-       toast.success("Audio file saved to your dashboard");
+      toast.success("Audio file saved to your dashboard");
     }
 
     console.log("response", response);
-
   };
 
   // Create the audio from the user's input text
@@ -174,34 +177,34 @@ export default function YourVoicesPage({
             />
             {/* <source ref={sourceElem} src={response} type="audio/mpeg" /> */}
             <div className="flex flex-row gap-6 items-center mt-10">
-                 <a
-              className="flex items-center gap-4"
-              href={response ? URL.createObjectURL(response) : ""}
-              download
-            >
-              {response ? (
-                <div className="flex gap-6 items-center">
-                  <Button className="flex gap-5">
-                    <Download size={16} className="text-white" />{" "}
-                    <p className="text-white">Download Audio File</p>
-                  </Button>
-                </div>
-              ) : (
-                ""
-              )}
-            </a> 
-            <Button variant={'outline'}
-              onClick={() => handleAudioUploadtoS3(response)}
-            >
-              Save to Your Dashboard
-              {loading && (
-                <span className="animate-spin text-lg ml-3">
-                  <ImSpinner3 />
-                </span>)}
-            </Button>
+              <a
+                className="flex items-center gap-4"
+                href={response ? URL.createObjectURL(response) : ""}
+                download
+              >
+                {response ? (
+                  <div className="flex gap-6 items-center">
+                    <Button className="flex gap-5">
+                      <Download size={16} className="text-white" />{" "}
+                      <p className="text-white">Download Audio File</p>
+                    </Button>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </a>
+              <Button
+                variant={"outline"}
+                onClick={() => handleAudioUploadtoS3(response)}
+              >
+                Save to Your Dashboard
+                {loading && (
+                  <span className="animate-spin text-lg ml-3">
+                    <ImSpinner3 />
+                  </span>
+                )}
+              </Button>
             </div>
-         
-           
           </>
         )}
       </div>

@@ -1,20 +1,20 @@
-import { getServerSession } from "next-auth";
+import { currentUser } from "./auth";
 
-import prismadb from "./prismadb";
-import { authOptions } from "@/utils/authOptions";
+import { database } from "./prismadb";
+
 
 const DAY_IN_MS = 86_400_000;
 
 export const checkSubscription = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await currentUser();
 
-  if (!session?.user.id || !session) {
+  if (!session?.id || !session) {
     return false;
   }
 
-  const userSubscription = await prismadb.userSubscription.findUnique({
+  const userSubscription = await database.userSubscription.findUnique({
     where: {
-      userId: session.user.id,
+      userId: session.id,
     },
     select: {
       stripeSubscriptionId: true,
@@ -37,15 +37,15 @@ export const checkSubscription = async () => {
 };
 
 export const subscriptionData = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await currentUser();
 
-  if (!session?.user.id || !session) {
+  if (!session?.id || !session) {
     return null;
   }
 
-  const userSubscription = await prismadb.userSubscription.findUnique({
+  const userSubscription = await database.userSubscription.findUnique({
     where: {
-      userId: session?.user.id,
+      userId: session?.id,
     },
   });
 

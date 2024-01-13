@@ -15,9 +15,6 @@ type InputTextProps = {
 
 const InputText = ({setText, text, characterCount, setCharacterCount}: InputTextProps) => {
 
-
-
-
   const handleTextChange = (e: any) => {
     const newText = e.target.value;
     setCharacterCount(newText.length);
@@ -26,17 +23,18 @@ const InputText = ({setText, text, characterCount, setCharacterCount}: InputText
   };
 
   return (
-    <div className="w-[95%] flex flex-col gap-2">
+    <div className="w-full flex flex-col gap-2">
+      <div className="relative w-full">
         <Textarea
-        className="bg-white border border-gray-300 rounded-md p-2 w-full h-[150px]"
-        value={text}
-        onChange={handleTextChange}
-        placeholder="Type your text here..."
-      />
-      <p>
-        {/* Character Count: {voice.length}/200 */}
-        Character Count: {characterCount}
-      </p>
+          className="bg-white border border-gray-300 rounded-md p-2 w-full h-[150px] pr-16" // Adjust padding-right to make space for character count
+          value={text}
+          onChange={handleTextChange}
+          placeholder="Type your text here..."
+        />
+        <p className="absolute bottom-2 right-3 text-sm text-gray-600"> {/* Adjust bottom and right to position the count */}
+          {characterCount}
+        </p>
+      </div>
     </div>
   );
 };

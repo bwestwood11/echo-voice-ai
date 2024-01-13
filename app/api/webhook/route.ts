@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import { headers } from 'next/headers';
 import { NextResponse } from "next/server";
-import prismadb from "@/lib/prismadb";
+import { database } from "@/lib/prismadb";
 import { stripe } from "@/lib/stripe";
 
 
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     return new NextResponse("User id is required", { status: 400 })
   }
   
-  await prismadb.userSubscription.create({
+  await database.userSubscription.create({
     data: {
         userId: session?.metadata?.userId,
         stripeSubscriptionId: subscription.id as string,
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
   if(event.type === "invoice.payment_succeeded") {
     const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
     console.log(subscription)
-    await prismadb.userSubscription.update({
+    await database.userSubscription.update({
         where: {
             stripeSubscriptionId: subscription.id as string,
         },
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
     });
 
     // Update the count in the Prisma database
-    const userApiLimit = await prismadb.userApiLimit.findUnique({
+    const userApiLimit = await database.userApiLimit.findUnique({
       where: {
           userId: session?.metadata?.userId
       }
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
 
   // if the user's api limit exists, update the count
   if(userApiLimit) {
-    await prismadb.userApiLimit.update({
+    await database.userApiLimit.update({
         where: {
             userId: session?.metadata?.userId
         },

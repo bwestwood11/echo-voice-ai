@@ -2,13 +2,17 @@
 
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import Provider from '@/context/Provider'
 import ModalProvider from '@/components/modal-provider'
 import 'regenerator-runtime/runtime'
 import ToastProvider from '@/context/ToastProvider'
 
-const inter = Inter({ subsets: ['latin'] })
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -32,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
      <Provider session={session}>
-      <body className={inter.className}>
+      <body className={poppins.className}>
         <ToastProvider />
         <ModalProvider />
         {children}

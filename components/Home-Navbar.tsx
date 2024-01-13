@@ -16,7 +16,6 @@ import React from "react";
 
 import { Montserrat } from "next/font/google";
 import { Button } from "@/components/ui/button";
-import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -35,6 +34,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { UserIcon } from "lucide-react";
+import { logout } from "@/actions/logout";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -105,9 +107,11 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 const NavigationBar = () => {
-  const { data: session } = useSession();
+  const session = useCurrentUser();
 
-  const ToggleMenu = () => {};
+  const signingOut = () => {
+    logout();
+  }
 
   return (
     <nav
@@ -204,15 +208,17 @@ const NavigationBar = () => {
         {!session ? (
           <>
             <div className="sm:flex gap-3 hidden">
-              <Button onClick={() => signIn("google")}>Sign In</Button>
-              <Button onClick={() => signIn("google")} variant="outline">
-                Sign Up
+              <Button>
+                <Link href="/auth/login">Sign In</Link>
+              </Button>
+              <Button variant="outline">
+                <Link href="/auth/register">Sign Up</Link>
               </Button>
             </div>
             <div className="flex sm:hidden">
               <Sheet>
                 <SheetTrigger>
-                  <GiHamburgerMenu onClick={ToggleMenu} className="w-8 h-8" />
+                  <GiHamburgerMenu className="w-8 h-8" />
                 </SheetTrigger>
                 <SheetContent className="h-screen">
                   <SheetHeader>
@@ -250,17 +256,11 @@ const NavigationBar = () => {
                         </li>
                       </ul>
                       <div className="mt-10 flex gap-6 mx-auto justify-center">
-                        <Button
-                          variant="orange"
-                          onClick={() => signIn("google")}
-                        >
-                          Sign In
+                        <Button variant="orange">
+                          <Link href="/auth/login">Sign In</Link>
                         </Button>
-                        <Button
-                          onClick={() => signIn("google")}
-                          variant="outline"
-                        >
-                          Sign Up
+                        <Button variant="outline">
+                          <Link href="/auth/register">Sign Up</Link>
                         </Button>
                       </div>
                     </SheetDescription>
@@ -274,8 +274,10 @@ const NavigationBar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger className="cursor-pointer" asChild>
                 <Avatar>
-                  <AvatarImage src={session?.user.image} />
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarImage src={session?.image ?? ''} />
+                  <AvatarFallback>
+                    <UserIcon />
+                  </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="mt-4 mr-1 z-10">
@@ -289,7 +291,7 @@ const NavigationBar = () => {
                   <Link href={`/dashboard`}>Settings</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="mb-2 mt-2">
-                  <Button onClick={() => signOut()} variant="ghost">
+                  <Button onClick={() => signingOut()} variant="ghost">
                     Sign out
                   </Button>
                 </DropdownMenuItem>

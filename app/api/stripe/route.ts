@@ -1,25 +1,24 @@
-import { getServerSession } from "next-auth";
+import { currentUser } from "@/lib/auth";
 import { NextResponse } from "next/server";
-
-import prismadb from "@/lib/prismadb";
+import { database } from "@/lib/prismadb";
 import { stripe } from "@/lib/stripe";
 import { absoluteUrl } from "@/lib/utils";
-import { authOptions } from "@/utils/authOptions";
+
 
 const settings = absoluteUrl("/settings");
 
 // This route is for creating a checkout session or if a pro member then retrieves the billing portal session
 export async function GET() {
     try {
-        const session = await getServerSession(authOptions);
+        const session = await currentUser();
 
-        if (!session?.user.id || !session) {
+        if (!session?.id || !session) {
             return new NextResponse("Unauthorized", { status: 401 })
         }
 
-        const userSubscription = await prismadb.userSubscription.findUnique({
+        const userSubscription = await database.userSubscription.findUnique({
             where: {
-                userId: session.user.id
+                userId: session.id
             }
         });
 
@@ -39,7 +38,7 @@ export async function GET() {
             cancel_url: settings,
             payment_method_types: ["card"],
             mode: "subscription",
-            customer_email: session.user.email,
+            customer_email: session.email,
             line_items: [
                   {
                     price: process.env.STRIPE_PRICE_ID,
@@ -47,7 +46,7 @@ export async function GET() {
                   },
             ],
             metadata: {
-                userId: session.user.id
+                userId: session.id
             }
         });
                 

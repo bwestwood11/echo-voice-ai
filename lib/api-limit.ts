@@ -1,28 +1,28 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/utils/authOptions";
-import prismadb from "@/lib/prismadb";
+import { currentUser } from "./auth";
+
+import { database } from "@/lib/prismadb";
 import { MAX_CHARACTERS, MAX_FREE_COUNTS, MAX_PRO_COUNTS } from "@/constants";
 
 
 export const increaseApiLimit = async () => {
     // get the user's session from the server
-    const session = await getServerSession(authOptions);
+    const session = await currentUser();
    console.log('session', session)
 
     if(!session) return false;
 
     // retrieve the user's api limit from the database
-    const userApiLimit = await prismadb.userApiLimit.findUnique({
+    const userApiLimit = await database.userApiLimit.findUnique({
         where: {
-            userId: session.user.id
+            userId: session.id
         }
     });
 
     // if the user's api limit exists, update the count
     if(userApiLimit) {
-        await prismadb.userApiLimit.update({
+        await database.userApiLimit.update({
             where: {
-                userId: session.user.id
+                userId: session.id
             },
             data: {
                 count: userApiLimit.count + 1
@@ -30,9 +30,9 @@ export const increaseApiLimit = async () => {
         });
     } else {
         // if the user's api limit does not exist, create a new one
-        await prismadb.userApiLimit.create({
+        await database.userApiLimit.create({
             data: {
-                userId: session.user.id,
+                userId: session.id,
                 count: 1
             }
         });
@@ -41,14 +41,14 @@ export const increaseApiLimit = async () => {
 
 export const checkApiLimit = async () => {
     // get the user's session from the server
-    const session = await getServerSession(authOptions);
+    const session = await currentUser();
     console.log('session', session)
     if(!session) return false;
 
     // retrieve the user's api limit from the database
-    const userApiLimit = await prismadb.userApiLimit.findUnique({
+    const userApiLimit = await database.userApiLimit.findUnique({
         where: {
-            userId: session.user.id
+            userId: session.id
         }
     });
 
@@ -62,14 +62,14 @@ export const checkApiLimit = async () => {
 };
 export const checkProApiLimit = async () => {
     // get the user's session from the server
-    const session = await getServerSession(authOptions);
+    const session = await currentUser();
     console.log('session', session)
     if(!session) return false;
 
 
-    const userCharacterLimit = await prismadb.proUserCharacterLimit.findUnique({
+    const userCharacterLimit = await database.proUserCharacterLimit.findUnique({
         where: {
-            userId: session.user.id
+            userId: session.id
         }
     });
 
@@ -98,14 +98,14 @@ export const checkProApiLimit = async () => {
 
 export const getApiLimitCount = async () => {    
     // get the user's session from the server
-    const session = await getServerSession(authOptions);
+    const session = await currentUser();
   console.log('session', session)
     if(!session) return false;
 
     // retrieve the user's api limit from the database
-    const userApiLimit = await prismadb.userApiLimit.findUnique({
+    const userApiLimit = await database.userApiLimit.findUnique({
         where: {
-            userId: session.user.id
+            userId: session.id
         }
     });
 
@@ -118,23 +118,23 @@ export const getApiLimitCount = async () => {
 
 export const increaseCharacterCount = async (text: number) => {
      // get the user's session from the server
-     const session = await getServerSession(authOptions);
+     const session = await currentUser();
      console.log('session', session)
        if(!session) return false;
 console.log('text', text)
     // retrieve the user's character count from the database
-     const userCharacterCount = await prismadb.proUserCharacterLimit.findUnique({
+     const userCharacterCount = await database.proUserCharacterLimit.findUnique({
             where: {
-                userId: session.user.id
+                userId: session.id
             }
         });
 
         console.log('userCharacterCount', userCharacterCount)
 
         if (userCharacterCount) {
-            await prismadb.proUserCharacterLimit.update({
+            await database.proUserCharacterLimit.update({
                 where: {
-                    userId: session.user.id
+                    userId: session.id
                 },
                 data: {
                     count: userCharacterCount.count + text
@@ -142,9 +142,9 @@ console.log('text', text)
             });
         } else {
             // if the user's character count does not exist, create a new one
-            await prismadb.proUserCharacterLimit.create({
+            await database.proUserCharacterLimit.create({
                 data: {
-                    userId: session.user.id,
+                    userId: session.id,
                     count: text
                 }
             });
@@ -155,14 +155,14 @@ console.log('text', text)
 
 export const getCharacterCount = async () => {
     // get the user's session from the server
-    const session = await getServerSession(authOptions);
+    const session = await currentUser();
     console.log('session', session)
       if(!session) return false;
 
     // retrieve the user's character count from the database
-    const userCharacterCount = await prismadb.proUserCharacterLimit.findUnique({
+    const userCharacterCount = await database.proUserCharacterLimit.findUnique({
         where: {
-            userId: session.user.id
+            userId: session.id
         }
     });
 
