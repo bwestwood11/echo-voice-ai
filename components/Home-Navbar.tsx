@@ -37,6 +37,15 @@ import {
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { UserIcon } from "lucide-react";
 import { logout } from "@/actions/logout";
+import { FiFileText } from "react-icons/fi";
+import { MdKeyboardVoice } from "react-icons/md";
+import { FaVideo } from "react-icons/fa";
+import { FaPhotoVideo } from "react-icons/fa";
+import { IoNewspaper } from "react-icons/io5";
+import { FaClipboardQuestion } from "react-icons/fa6";
+import { FaDiscord } from "react-icons/fa";
+import { FaTwitter } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -111,7 +120,7 @@ const NavigationBar = () => {
 
   const signingOut = () => {
     logout();
-  }
+  };
 
   return (
     <nav
@@ -154,7 +163,7 @@ const NavigationBar = () => {
                         >
                           {/* <Icons.logo className="h-6 w-6" /> */}
                           <div className="mb-2 mt-4 text-lg font-medium">
-                            shadcn/ui
+                            Voice Fusion
                           </div>
                           <p className="text-sm leading-tight text-muted-foreground">
                             Beautifully designed components built with Radix UI
@@ -163,19 +172,47 @@ const NavigationBar = () => {
                         </a>
                       </NavigationMenuLink>
                     </li>
-                    <ListItem href="/docs" title="Introduction">
-                      Re-usable components built using Radix UI and Tailwind
-                      CSS.
-                    </ListItem>
-                    <ListItem href="/docs/installation" title="Installation">
-                      How to install dependencies and structure your app.
-                    </ListItem>
-                    <ListItem
-                      href="/docs/primitives/typography"
-                      title="Typography"
-                    >
-                      Styles for headings, paragraphs, lists...etc
-                    </ListItem>
+                    <li>
+                      <ListItem href="/">
+                        <div className="flex space-x-2 items-center mb-2">
+                          <FiFileText className="w-6 h-6 text-white bg-green-500 p-1 rounded-lg" />
+                          <h3 className="font-semibold text-black">
+                            Text to Speech
+                          </h3>
+                        </div>
+                        <p>
+                          Type anything and we will convert it to over 20+
+                          different voices.
+                        </p>
+                      </ListItem>
+                    </li>
+
+                    <li>
+                      <ListItem href="/">
+                        <div className="flex space-x-2 items-center mb-2">
+                          <MdKeyboardVoice className="w-6 h-6 text-white bg-blue-500 p-1 rounded-lg" />
+                          <h3 className="font-semibold text-black">
+                            AI Voices
+                          </h3>
+                        </div>
+                        <p>
+                          Utilize the power of AI to generate voices that sound like real people.
+                        </p>
+                      </ListItem>
+                    </li>
+                    <li>
+                      <ListItem href="/">
+                        <div className="flex space-x-2 items-center mb-2">
+                          <FaVideo className="w-6 h-6 text-white bg-orange-500 p-1 rounded-lg" />
+                          <h3 className="font-semibold text-black">
+                            Video Editor
+                          </h3>
+                        </div>
+                        <p>
+                          Utilize the power of AI to generate voices that sound like real people.
+                        </p>
+                      </ListItem>
+                    </li>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -183,20 +220,89 @@ const NavigationBar = () => {
                 <NavigationMenuTrigger>How It Works</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                    {components.map((component) => (
-                      <ListItem
-                        key={component.title}
-                        title={component.title}
-                        href={component.href}
-                      >
-                        {component.description}
+                  <li>
+                      <ListItem href="/">
+                        <div className="flex space-x-2 items-center mb-2">
+                          <FaPhotoVideo className="w-6 h-6 text-white bg-yellow-500 p-1 rounded-lg" />
+                          <h3 className="font-semibold text-black">
+                            Video Tutorials
+                          </h3>
+                        </div>
+                        <p>
+                          Watch how to get started.
+                        </p>
                       </ListItem>
-                    ))}
+                    </li>
+                  <li>
+                      <ListItem href="/">
+                        <div className="flex space-x-2 items-center mb-2">
+                          <IoNewspaper className="w-6 h-6 text-white bg-red-500 p-1 rounded-lg" />
+                          <h3 className="font-semibold text-black">
+                            Blog
+                          </h3>
+                        </div>
+                        <p>
+                          Read our latest articles on how to use Voice Fusion.
+                        </p>
+                      </ListItem>
+                    </li>
+                  <li>
+                      <ListItem href="/">
+                        <div className="flex space-x-2 items-center mb-2">
+                          <FaClipboardQuestion className="w-6 h-6 text-white bg-pink-500 p-1 rounded-lg" />
+                          <h3 className="font-semibold text-black">
+                            FAQ
+                          </h3>
+                        </div>
+                        <p>
+                          Check out our most commonly asked questions.
+                        </p>
+                      </ListItem>
+                    </li>
+                  <li>
+                      <ListItem href="/">
+                        <div className="flex space-x-2 items-center mb-2">
+                          <FaDiscord className="w-6 h-6 text-white bg-purple-500 p-1 rounded-lg" />
+                          <h3 className="font-semibold text-black">
+                            Discord
+                          </h3>
+                        </div>
+                        <p>
+                          Join our Discord community to get help from other users.
+                        </p>
+                      </ListItem>
+                    </li>
+                  <li>
+                      <ListItem href="/">
+                        <div className="flex space-x-2 items-center mb-2">
+                          <FaTwitter className="w-6 h-6 text-white bg-blue-500 p-1 rounded-lg" />
+                          <h3 className="font-semibold text-black">
+                            Twitter
+                          </h3>
+                        </div>
+                        <p>
+                          Follow us on Twitter to get the latest updates.
+                        </p>
+                      </ListItem>
+                    </li>
+                  <li>
+                      <ListItem href="/">
+                        <div className="flex space-x-2 items-center mb-2">
+                          <MdEmail className="w-6 h-6 text-white bg-green-500 p-1 rounded-lg" />
+                          <h3 className="font-semibold text-black">
+                            Contact Us
+                          </h3>
+                        </div>
+                        <p>
+                          Email us at info@voicefusion.io for any questions.
+                        </p>
+                      </ListItem>
+                    </li>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/docs" legacyBehavior passHref>
+                <Link href="/pricing" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Pricing
                   </NavigationMenuLink>
@@ -274,7 +380,7 @@ const NavigationBar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger className="cursor-pointer" asChild>
                 <Avatar>
-                  <AvatarImage src={session?.image ?? ''} />
+                  <AvatarImage src={session?.image ?? ""} />
                   <AvatarFallback>
                     <UserIcon />
                   </AvatarFallback>
@@ -282,13 +388,13 @@ const NavigationBar = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="mt-4 mr-1 z-10">
                 <DropdownMenuItem className="mb-2 mt-2">
-                  <Link href='/dashboard'>Dashboard</Link>
+                  <Link href="/dashboard">Dashboard</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="mb-2 mt-2">
                   <Link href={`/dashboard`}>Your Account</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="mb-2 mt-2">
-                  <Link href='/settings'>Settings</Link>
+                  <Link href="/settings">Settings</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="mb-2 mt-2">
                   <Button onClick={signingOut} variant="ghost">

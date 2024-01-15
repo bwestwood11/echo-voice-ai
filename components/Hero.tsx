@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { useState } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/use-current-user";
 import Link from "next/link";
 
 const montserrat = Montserrat({
@@ -26,7 +26,7 @@ const Hero = () => {
     setActiveAudio(audio);
   };
 
-  const { data: session } = useSession();
+  const session = useCurrentUser();
 
 
   return (
@@ -54,7 +54,7 @@ const Hero = () => {
               Realistic AI <span className="text-[#ff8303]">Voices</span>{" "}
               Generated in Seconds
             </h2>
-            <p className="mt-6 text-gray-600 leading-7">
+            <p className="mt-6 text-gray-700 leading-7">
               Create natural sounding voice overs for your videos, podcasts, and more. Choose from over 50 different voices and languages to find the perfect one for you. 
             </p>
            {!session ? (
@@ -77,7 +77,7 @@ const Hero = () => {
               alt="Hero Image"
               width={200}
               height={200}
-              className="rounded-xl cursor-pointer shadow-xl w-1/2 sm:w-full shadow-black hover:scale-105 transition-all duration-300"
+              className="rounded-xl cursor-pointer shadow-xl w-1/2 sm:w-full shadow-black hover:opacity-90 transition-all duration-300"
               onClick={() => playAudio("/Glinda-Voice.mp3")}
             />
             <Image
@@ -85,7 +85,7 @@ const Hero = () => {
               alt="Hero Image"
               width={200}
               height={200}
-              className="rounded-xl cursor-pointer shadow-xl w-1/2 sm:w-full shadow-black hover:scale-105 transition-all duration-300"
+              className="rounded-xl cursor-pointer shadow-xl w-1/2 sm:w-full shadow-black hover:opacity-90 transition-all duration-300"
               onClick={() => playAudio("/Clyde-Voice.mp3")}
             />
           </div>
