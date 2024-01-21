@@ -14,20 +14,26 @@ export const NewVerificationForm = () => {
   const searchParams = useSearchParams();
 
   const token = searchParams.get("token");
+  console.log("token", token);
 
   const onSubmit = useCallback(() => {
-    if (success || error) return
+    if (success || error) return;
     if (!token) {
       setError("Token is missing");
       return;
     }
 
-    newVerification(token).then((data) => {
-      setSuccess(data.success);
-      setError(data.error);
-    }).catch(() => {
-      setError("Something went wrong");
-    })
+    newVerification(token)
+      .then((data) => {
+        if (data.success) {
+          setSuccess(data.success);
+        } else {
+          setError(data.error);
+        }
+      })
+      .catch(() => {
+        setError("Something went wrong");
+      });
   }, [token]);
 
   useEffect(() => {
@@ -42,13 +48,9 @@ export const NewVerificationForm = () => {
       backButtonLabel="Back to login"
     >
       <div className="flex items-center w-full justify-center">
-        {!success && !error && (
-          <BeatLoader />
-        )}
+        {!success && !error && <BeatLoader />}
         <FormSuccess message={success} />
-        {!success && (
-           <FormError message={error} />
-        )}
+        {!success && <FormError message={error} />}
       </div>
     </CardWrapper>
   );
