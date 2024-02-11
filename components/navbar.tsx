@@ -16,8 +16,8 @@ import { currentUser } from "@/lib/auth";
 import { logout } from "@/actions/logout";
 
 const Navbar = async () => {
-  const apiLimitCount = await getFreeCharacterCount();
-  const characterCount = await getProCharacterCount();
+  const freeCharacteCount = await getFreeCharacterCount();
+  const proCharacterCount = await getProCharacterCount();
   const isPro = await checkSubscription();
   const session = await currentUser();
   console.log("session", session);
@@ -29,8 +29,8 @@ const Navbar = async () => {
     <div className="flex items-center p-4 bg-slate-100">
       <MobileSidebar
         isPro={isPro}
-        apiLimitCount={apiLimitCount}
-        characterCount={characterCount}
+        freeCharacteCount={freeCharacteCount}
+        proCharacterCount={proCharacterCount}
       />
       <div className="flex w-full justify-end">
         <DropdownMenu>
