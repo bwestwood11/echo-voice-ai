@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { IoMdPlay } from "react-icons/io";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 const examples = [
   {

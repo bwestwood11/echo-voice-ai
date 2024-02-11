@@ -159,7 +159,6 @@ const VoicesPage = async () => {
             </audio>
           </div>
         ))}
-        ;
       </div>
     </div>
   );

@@ -9,15 +9,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getApiLimitCount, getCharacterCount } from "@/lib/api-limit";
+import { getFreeCharacterCount, getProCharacterCount } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 import { User2Icon } from "lucide-react";
 import { currentUser } from "@/lib/auth";
 import { logout } from "@/actions/logout";
 
 const Navbar = async () => {
-  const apiLimitCount = await getApiLimitCount();
-  const characterCount = await getCharacterCount();
+  const apiLimitCount = await getFreeCharacterCount();
+  const characterCount = await getProCharacterCount();
   const isPro = await checkSubscription();
   const session = await currentUser();
   console.log("session", session);
@@ -52,7 +52,7 @@ const Navbar = async () => {
             <DropdownMenuItem className="mb-2 mt-2">
               <Link href="/settings">Settings</Link>
             </DropdownMenuItem>   
-            <DropdownMenuItem className="my-2">
+            <DropdownMenuItem className="my-2 cursor-pointer">
                 Sign out
               </DropdownMenuItem>
           </DropdownMenuContent>

@@ -43,7 +43,7 @@ const ProModal = () => {
             </div>
           </DialogTitle>
           <DialogDescription className="text-center pt-2 space-y-2 text-zinc-900 font-medium">
-            Have access to all features and 100 credits per month.
+            Have access to all features and 20,000 characters per month.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

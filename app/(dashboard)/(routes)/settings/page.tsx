@@ -10,7 +10,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Settings",
-  description: "Manage your account settings!",
+  description: "Manage your account settings here.",
   alternates: {
     canonical: "https://www.voicefusion.io/settings",
   },
@@ -19,9 +19,8 @@ export const metadata: Metadata = {
 const SettingsPage = async () => {
   const isPro = await checkSubscription();
   const session = await currentUser();
-  console.log('session object', session)
   const subscription = await subscriptionData();
-  console.log("single subscription", subscription);
+
   return (
     <div className="h-screen bg-slate-100">
       <div className="px-4 lg:px-8 flex items-center gap-x-3 mb-8">

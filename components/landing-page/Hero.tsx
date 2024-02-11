@@ -1,9 +1,9 @@
 'use client'
 
-import NavigationBar from "./Home-Navbar";
+import NavigationBar from "../Home-Navbar";
 import { Montserrat } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import Image from "next/image";
 import { useState } from "react";
 import { useCurrentUser } from "@/hooks/use-current-user";

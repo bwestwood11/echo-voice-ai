@@ -36,6 +36,14 @@ export async function getSignedURL({
   const timestamp = new Date().toISOString();
   const key = `users/${session.id}/audio/${timestamp}_audioFile.mp3`;
 
+    // Fetch the existing count value from the database
+    const existingAudio = await database.audioFile.findFirst({
+      where: { userId: session.id },
+      orderBy: { createdAt: "desc" }, // You might need to adjust the sorting criteria
+    });
+  
+    const count = existingAudio ? existingAudio.count + 1 : 1;
+
   const putObjctCommand = new PutObjectCommand({
     Bucket: process.env.AWS_BUCKET_NAME!,
     Key: key,
@@ -59,6 +67,7 @@ export async function getSignedURL({
       url: signedURL.split("?")[0],
       fileName: `${timestamp}_audioFile.mp3`,
       image: correctImagePath,
+      count: count + 1,
       aiName: name,
       text: text
     },

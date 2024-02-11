@@ -1,262 +1,114 @@
-"use client";
-
 import { Montserrat } from "next/font/google";
-import { useState } from "react";
-import AvatarComponent from "@/components/AvatarComponent";
-import InputText from "@/components/InputText";
-import { Button } from "@/components/ui/button";
-import { ImSpinner3 } from "react-icons/im";
-import { useProModal } from "@/hooks/use-pro-modal";
-import { useRouter } from "next/navigation";
-import { Download } from "lucide-react";
-import { getSignedURL } from "@/actions/actions";
+import { Separator } from "@/components/ui/separator";
+import { MdRecordVoiceOver } from "react-icons/md";
+import { IoText } from "react-icons/io5";
+import { MdAudiotrack } from "react-icons/md";
+import { Progress } from "@/components/ui/progress";
+import { auth } from "@/auth";
+import { Metadata } from "next";
+import {
+  getAudioFiles,
+  getFreeCharacterCount,
+  getFreeTotalCount,
+  getProCharacterCount,
+  getProTotalCount,
+} from "@/lib/api-limit";
+import { checkSubscription } from "@/lib/subscription";
+import { MAX_FREE_CHARACTERS, MAX_PRO_CHARACTERS } from "@/constants";
+import SearchBar from "@/components/search-bar";
+import SavedVoices from "@/components/saved-voices";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
 });
 
-// export const metadata: Metadata = {
-//   title: "Dashboard",
-//   description: "Upload a file to be processed!",
-//   alternates: {
-//     canonical: "https://www.voicefusion.io/dashboard",
-//   },
-// };
-
-type Voice = {
-  name: string;
-  voiceID: string;
-  accent: string;
-  image: string;
-  audio: string;
-  flag: string;
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description:
+    "User's dashboard to view previous voice creations, data about their account, and more.",
+  alternates: {
+    canonical: "https://www.voicefusion.io/dashboard",
+  },
 };
 
-const voices = [
-  {
-    name: "John",
-    voiceID: "GBv7mTt0atIp3Br8iCZE",
-    accent: "American",
-    image: "/male1.png",
-    audio: "/johnamericanvoice.mp3",
-    flag: "/american.png",
-  },
-  {
-    name: "Glinda",
-    voiceID: "z9fAnlkpzviPz146aGWa",
-    accent: "American",
-    image: "/girl5.png",
-    audio: "/glindaamericanvoice.mp3",
-    flag: "/american.png",
-  },
-  {
-    name: "Fin",
-    voiceID: "D38z5RcWu1voky8WS1ja",
-    accent: "Irish",
-    image: "/male3.png",
-    audio: "/finirishvoice.mp3",
-    flag: "/irish.png",
-  },
-  {
-    name: "Charlie",
-    voiceID: "IKne3meq5aSn9XLyUdCD",
-    accent: "Australian",
-    image: "/male4.png",
-    audio: "/charlieaustralianvoice.mp3",
-    flag: "/australian.png",
-  },
-  {
-    name: "Rachel",
-    voiceID: "21m00Tcm4TlvDq8ikWAM",
-    accent: "American",
-    image: "/girl3.png",
-    audio: "/rachelamericanvoice.mp3",
-    flag: "/american.png",
-  },
-  {
-    name: "Clyde",
-    voiceID: "2EiwWnXFnvU5JabPnv8n",
-    accent: "American",
-    image: "/male6.png",
-    audio: "/clydeamericanvoice.mp3",
-    flag: "/american.png",
-  },
-  {
-    name: "Domi",
-    voiceID: "AZnzlk1XvdvUeBnXmlld",
-    accent: "American",
-    image: "/girl4.png",
-    audio: "/domiamericanvoice.mp3",
-    flag: "/american.png",
-  },
+const DashboardPage = async () => {
+  const session = await auth();
+  const isPro = await checkSubscription();
+  const totalFreeCreations = await getFreeTotalCount();
+  const totalFreeCharacters = await getFreeCharacterCount();
+  const totalProCharacters = await getProCharacterCount();
+  const totalProCreations = await getProTotalCount();
+  const audioFiles = await getAudioFiles();
 
-  {
-    name: "Nicole",
-    voiceID: "piTKgcLEGmPE4e6mEKli",
-    accent: "American",
-    image: "/girl6.png",
-    audio: "/nicoleamericanvoice.mp3",
-    flag: "/american.png",
-  },
-  {
-    name: "Dave",
-    voiceID: "CYw3kZ02Hs0563khs1Fj",
-    accent: "British",
-    image: "/britishman1.png",
-    audio: "/davebritishvoice.mp3",
-    flag: "/britishflag.png",
-  },
-  {
-    name: "Dorothy",
-    voiceID: "ThT5KcBeYPX3keUQqHPh",
-    accent: "British",
-    image: "/britishwoman2.png",
-    audio: "/dorothybritishvoice.mp3",
-    flag: "/britishflag.png",
-  },
-  {
-    name: "Arnold",
-    voiceID: "VR6AewLTigWG4xSOukaG",
-    accent: "American",
-    image: "/arnoldimage.png",
-    audio: "/arnoldamericanvoice.mp3",
-    flag: "/american.png",
-  },
-  {
-    name: "Charlotte",
-    voiceID: "XB0fDUnXU5powFXDhCwa",
-    accent: "American",
-    image: "/charlotteimage.png",
-    audio: "/charlotteamericanvoice.mp3",
-    flag: "/american.png",
-  },
-  {
-    name: "Joanne",
-    voiceID: "JzxOoJpXoKVTtjCHhQhY",
-    accent: "American",
-    image: "/charlotteimage.png",
-    audio: "/joanne-voice.mp3",
-    flag: "/american.png",
-  },
-];
-
-const DashboardPage = () => {
-  const [selectedVoiceID, setSelectedVoiceID] = useState("");
-  const [text, setText] = useState("");
-  const [converting, setConverting] = useState(false);
-  const [response, setResponse] = useState<Blob | "">("");
-  const [characterCount, setCharacterCount] = useState(0);
-
-  const router = useRouter();
-  const proModal = useProModal();
-
-  // Create the audio from the user's input text
-  const handleVoiceInput = async () => {
-    try {
-      setConverting(true);
-      const response = await fetch("/api/voice-creation", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          voiceID: selectedVoiceID,
-          text: text,
-          characterCount: characterCount,
-        }),
-      });
-
-      if (!response.ok) {
-        if (response.status === 403) {
-          setConverting(false);
-          proModal.onOpen();
-        } else {
-          console.log("Unexpected response status:", response.status);
-        }
-        return; // Stop further processing
-      }
-
-      const blobResponse = await response.blob();
-      setResponse(blobResponse);
-    } catch (error: any) {
-      console.log("error", error);
-      if (error?.response?.status === 403) {
-        proModal.onOpen();
-      }
-    } finally {
-      setConverting(false);
-      router.refresh();
-    }
-  };
+  const stats = [
+    {
+      title: "Total Voice Creations",
+      value: isPro ? totalProCreations : totalFreeCreations,
+      icon: <MdRecordVoiceOver className="text-[#ff8303] text-3xl" />,
+      progress: isPro
+        ? (((totalProCreations as number) / MAX_PRO_CHARACTERS) as number) * 100
+        : (((totalFreeCreations as number) / MAX_FREE_CHARACTERS) as number) *
+          100,
+    },
+    {
+      title: "Total Characters Used",
+      value: isPro ? totalProCharacters : totalFreeCharacters,
+      icon: <IoText className="text-[#ff8303] text-3xl" />,
+      progress: isPro
+        ? (((totalProCharacters as number) / MAX_PRO_CHARACTERS) as number) *
+          100
+        : (((totalFreeCharacters as number) / MAX_FREE_CHARACTERS) as number) *
+          100,
+    },
+    {
+      title: "Saved Audio Files",
+      value: audioFiles ? audioFiles.length : 0,
+      icon: <MdAudiotrack className="text-[#ff8303] text-3xl" />,
+      progress: isPro
+        ? (((totalProCreations as number) / MAX_PRO_CHARACTERS) as number) * 100
+        : (((totalFreeCreations as number) / MAX_FREE_CHARACTERS) as number) *
+          100,
+    },
+  ];
 
   return (
-    <div className="w-full h-screen bg-slate-100">
+    <section className="w-full h-full bg-slate-100">
       <h4 className="h2-bold text-center">
-        Choose Your <span className="text-[#ff8303]">AI Character</span>
+        {session?.user.name}'s <span className="text-[#ff8303]">Dashboard</span>
       </h4>
-      <div className="max-w-7xl mx-auto mt-20">
-        <div className="lg:grid lg:grid-rows-[20px_500px_1fr] lg:grid-cols-[200px_1fr_100px] lg:px-20 px-10 flex flex-col gap-2">
-          <div className="row-span-2 flex flex-col">
-            <AvatarComponent
-              voices={voices}
-              setSelectedVoiceID={setSelectedVoiceID}
-              selectedVoiceID={selectedVoiceID}
-            />
+      <p className="text-center mt-4 max-w-xl mx-auto">
+        Welcome to your dashboard! Here you will be able to view your previous
+        voice creations and organize them into a more manageable list.
+      </p>
+      <Separator orientation="horizontal" className="my-10 w-full" />
+      <h4 className="text-left text-2xl font-bold px-14">Account Statistics</h4>
+      <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8 px-10 mt-3">
+        {stats.map((stat) => (
+          <div
+            key={stat.title}
+            className="flex flex-col bg-white rounded-lg shadow-lg p-4 m-4 h-full"
+          >
+            <div className="flex flex-row items-center w-full justify-between">
+              <h4 className="font-medium text-xl">{stat.title}</h4>
+              <div className="mr-6">{stat.icon} </div>
+            </div>
+            <p className="text-slate-900 text-4xl font-extrabold mt-3">
+              {stat.value}
+            </p>
+            <Separator orientation="horizontal" className="my-16 w-full" />
+            <Progress value={stat.progress} />
+            <p className="mt-2">Total Used</p>
           </div>
-          <div className="row-span-2 flex flex-col">
-            <InputText
-              setText={setText}
-              text={text}
-              characterCount={characterCount}
-              setCharacterCount={setCharacterCount}
-            />
-          </div>
-          <div className="row-span-2 flex flex-col">
-            <Button onClick={handleVoiceInput} size="lg">
-              Generate
-              {converting && (
-                <span className="animate-spin text-lg ml-3">
-                  <ImSpinner3 />
-                </span>
-              )}
-            </Button>
-          </div>
-        </div>
+        ))}
       </div>
-      {response && (
-        <>
-          <audio src={response ? URL.createObjectURL(response) : ""} controls />
-          {/* <source ref={sourceElem} src={response} type="audio/mpeg" /> */}
-          <div className="flex flex-row gap-6 items-center mt-10">
-            <a
-              className="flex items-center gap-4"
-              href={response ? URL.createObjectURL(response) : ""}
-              download
-            >
-              {response ? (
-                <div className="flex gap-6 items-center">
-                  <Button className="flex gap-5">
-                    <Download size={16} className="text-white" />{" "}
-                    <p className="text-white">Download Audio File</p>
-                  </Button>
-                </div>
-              ) : (
-                ""
-              )}
-            </a>
-            {/* <Button variant={'outline'}
-              onClick={() => handleAudioUploadtoS3(response)}
-            >
-              Save to Your Dashboard
-              {loading && (
-                <span className="animate-spin text-lg ml-3">
-                  <ImSpinner3 />
-                </span>)}
-            </Button> */}
-          </div>
-        </>
-      )}
-    </div>
+      <Separator orientation="horizontal" className="mt-16 mb-8 w-full" />
+      <div className="mt-10 px-14">
+           <h4 className="text-left text-2xl font-bold">Saved Voices</h4>
+      <SearchBar />
+      <SavedVoices/>
+      </div>
+   
+    </section>
   );
 };
 

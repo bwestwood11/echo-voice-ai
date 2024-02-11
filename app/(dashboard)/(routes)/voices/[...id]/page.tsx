@@ -10,7 +10,6 @@ import { useProModal } from "@/hooks/use-pro-modal";
 import { Download } from "lucide-react";
 import { ImSpinner3 } from "react-icons/im";
 import { getSignedURL } from "@/actions/actions";
-import { MAX_CHARACTERS } from "@/constants";
 import { toast } from "react-hot-toast";
 
 const montserrat = Montserrat({
@@ -32,7 +31,6 @@ export default function YourVoicesPage({
   const [loading, setLoading] = useState(false);
   const [characterCount, setCharacterCount] = useState(0);
 
-  // console.log("params", params);
   // using the params to get the correct name, image and flag
   const nameString = params.id[1].split("%26")[1];
   const name = nameString.split("%3D")[1];
@@ -57,8 +55,6 @@ export default function YourVoicesPage({
     setCharacterCount(newText.length);
     setVoice(newText); // Update the state with the new text
   };
-
-  const isGenerateDisabled = characterCount > MAX_CHARACTERS;
 
   // Upload and save Audio to S3 bucket & database
   const handleAudioUploadtoS3 = async (audioBlob: Blob) => {
@@ -143,7 +139,7 @@ export default function YourVoicesPage({
     <div className="flex w-full h-screen bg-slate-100">
       <div className="max-w-7xl mx-auto flex flex-col">
         <div className="flex flex-col mb-8">
-          <Image src={correctImagePath} alt="name" width={350} height={350} />
+          <Image src={correctImagePath} alt="name" width={300} height={300} />
           <div className="flex flex-row gap-2 mx-auto mb-6 items-center">
             <h3 className="font-semibold text-2xl">{name}</h3>
             <Image src={correctFlagPath} alt="flag" width={50} height={50} />
@@ -159,7 +155,7 @@ export default function YourVoicesPage({
               {/* Character Count: {voice.length}/200 */}
               Character Count: {characterCount}
             </p>
-            <Button disabled={isGenerateDisabled} onClick={handleVoiceInput}>
+            <Button onClick={handleVoiceInput}>
               Generate
               {converting && (
                 <span className="animate-spin text-lg ml-3">

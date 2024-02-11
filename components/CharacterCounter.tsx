@@ -3,23 +3,23 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { MAX_CHARACTERS, MAX_FREE_COUNTS, MAX_PRO_COUNTS } from "@/constants";
+import { MAX_FREE_CHARACTERS, MAX_PRO_CHARACTERS} from "@/constants";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { Settings, Zap } from "lucide-react";
+import { Zap } from "lucide-react";
 import { useProModal } from "@/hooks/use-pro-modal";
 import { FcSettings } from "react-icons/fc";
 
 interface FreeCounterProps {
-  apiLimitCount: number;
+  freeCharacterCount: number;
   isPro: boolean;
-  characterCount: number;
+  proCharacterCount: number;
 }
 
-const FreeCounter = ({
-  apiLimitCount = 0,
+const CharacterCounter = ({
+  freeCharacterCount = 0,
   isPro = false,
-  characterCount = 0,
+  proCharacterCount = 0,
 }: FreeCounterProps) => {
   const proModal = useProModal();
   const [mounted, setMounted] = useState(false);
@@ -29,7 +29,7 @@ const FreeCounter = ({
   }, []);
 
   if (!mounted) return null;
-console.log(isPro)
+  
   return (
     <div className="px-3">
       <Card className="bg-white/10 border-0">
@@ -46,23 +46,23 @@ console.log(isPro)
             )} */}
             {isPro ? (
               <p className="text-white">
-                {characterCount} / {MAX_CHARACTERS} Characters
+                {proCharacterCount} / {MAX_PRO_CHARACTERS} Characters
               </p>
             ) : (
-              <p className="text-white">
-                {apiLimitCount} / {MAX_FREE_COUNTS} Voice Creations
+              <p className="text-white text-xs">
+                {freeCharacterCount} / {MAX_FREE_CHARACTERS} Free Characters Left
               </p>
             )}
 
             {isPro ? (
               <Progress
                 className="h-3"
-                value={(characterCount / MAX_CHARACTERS) * 100}
+                value={(proCharacterCount / MAX_PRO_CHARACTERS) * 100}
               />
             ) : (
               <Progress
                 className="h-3"
-                value={(apiLimitCount / MAX_FREE_COUNTS) * 100}
+                value={(freeCharacterCount / MAX_FREE_CHARACTERS) * 100}
               />
             )}
           </div>
@@ -92,4 +92,4 @@ console.log(isPro)
   );
 };
 
-export default FreeCounter;
+export default CharacterCounter;

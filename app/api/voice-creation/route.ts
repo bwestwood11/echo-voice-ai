@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import {
-  increaseApiLimit,
-  checkApiLimit,
-  checkProApiLimit,
-  increaseCharacterCount,
+  increaseFreeCharacterCount,
+  checkFreeCharacterCount,
+  checkProCharacterLimit,
+  increaseProCharacterCount,
 } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 
@@ -14,9 +14,9 @@ export async function POST(req: Request) {
   console.log(voiceID);
   console.log("characterCount", characterCount);
 
-  const freeTrial = await checkApiLimit();
+  const freeTrial = await checkFreeCharacterCount();
   const isPro = await checkSubscription();
-  const proLimit = await checkProApiLimit();
+  const proLimit = await checkProCharacterLimit();
 
   // free trial expired and not pro then return 403
   if (!freeTrial && !isPro) {
@@ -47,10 +47,15 @@ export async function POST(req: Request) {
       }),
     }
   );
-
-  //  increase the api limit or counter if pro
-  await increaseApiLimit();
-  await increaseCharacterCount(characterCount);
+  
+  if(!isPro) {
+    await increaseFreeCharacterCount(characterCount);
+  }
+  //  increase the user's pro character count
+  if(isPro) {
+    await increaseProCharacterCount(characterCount);
+  }
+  
 
   console.log(response.headers);
   const blob = await response.blob();

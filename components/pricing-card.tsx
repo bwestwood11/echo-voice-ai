@@ -3,6 +3,7 @@ import { FaCheck } from "react-icons/fa6";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 
+
 const plans = [
   {
     title: "Free",

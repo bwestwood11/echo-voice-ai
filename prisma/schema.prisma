@@ -7,9 +7,19 @@ generator client {
   provider        = "prisma-client-js"
 }
 
-model UserApiLimit {
+model FreeCharacterLimit {
+   id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @unique
+  characterCount Int @default(0)
+  count Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProUserCharacterLimit {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @unique
+  characterCount Int @default(0)
   count Int @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -69,6 +79,7 @@ model AudioFile {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId
   fileName String
+  count Int @default(0)
   aiName String
   url String
   text String
@@ -78,13 +89,7 @@ model AudioFile {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model ProUserCharacterLimit {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @unique
-  count Int @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
+
 
 model VerificationToken {
   id String @id @default(auto()) @map("_id") @db.ObjectId
