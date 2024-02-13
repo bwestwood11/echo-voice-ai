@@ -10,7 +10,7 @@ export const Social = () => {
 
   const DEFAULT_LOGIN_REDIRECT = "/dashboard";
   const callbackUrl = searchParams.get("callbackUrl");
-  const onClick = (provider: "google" | "github") => {
+  const onClick = (provider: "google") => {
     signIn(provider, {
       callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
