@@ -30,6 +30,8 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     return { error: "Email does not exist." };
   }
 
+  console.log('existinguser further down0', existingUser)
+
   // If the user's email is not verified, send a verification email
   if (!existingUser.emailVerified) {
     const verificationToken = await generateVerificationToken(

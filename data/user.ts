@@ -3,6 +3,7 @@ import { database } from "@/lib/prismadb";
 // Get a user by their email address
 export const getUserByEmail = async (email: string) => {
   try {
+    console.log("email in getUSerbyEmail", email);
     const user = await database.user.findUnique({
       where: {
         email,
