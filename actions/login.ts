@@ -22,6 +22,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
   // Check if a user exists with the given email address
   const existingUser = await getUserByEmail(email);
+  console.log("email in login action", email);
   console.log("existing User login page", existingUser);
 
   // If no user exists, return an error
