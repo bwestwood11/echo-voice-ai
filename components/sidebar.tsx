@@ -64,6 +64,7 @@ const Sidebar = ({
   isPro = false,
   proCharacterCount = 0,
 }: SidebarProps) => {
+  
   const pathname = usePathname();
 
   const session = useCurrentUser();
@@ -113,12 +114,12 @@ const Sidebar = ({
             <Link
               href={route.href}
               key={route.href}
-              className={cn(
-                "text-sm group flex p-4 w-full font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
-                pathname === route.href
+              className=
+                {`text-sm group flex p-4 w-full font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition,
+                ${pathname === route.href
                   ? "bg-white/10 text-white"
-                  : "text-zinc-400"
-              )}
+                  : "text-zinc-400"}
+              `}
             >
               <div className="flex items-center flex-1">
                 <route.icon className={cn("w-6 h-6 mr-3", route.color)} />
