@@ -3,13 +3,13 @@ import { database } from "@/lib/prismadb";
 // Get a user by their email address
 export const getUserByEmail = async (email: string) => {
   try {
-    console.log("email in getUSerbyEmail", email);
     const user = await database.user.findUnique({
       where: {
         email,
       },
     });
-  console.log("user in getUserByEmail", user);
+    console.log("email in getUSerbyEmail", email);
+    console.log("user in getUserByEmail", user);
     return user;
   } catch (error) {
     return null;
@@ -18,14 +18,14 @@ export const getUserByEmail = async (email: string) => {
 
 // Get a user by their ID
 export const getUserByID = async (id: string) => {
-    try {
-      const user = await database.user.findUnique({
-        where: {
-          id,
-        },
-      });
-      return user;
-    } catch (error) {
-      return null;
-    }
-  };
+  try {
+    const user = await database.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    return user;
+  } catch (error) {
+    return null;
+  }
+};
