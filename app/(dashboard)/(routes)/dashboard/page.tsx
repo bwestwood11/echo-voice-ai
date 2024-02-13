@@ -31,7 +31,13 @@ export const metadata: Metadata = {
   },
 };
 
-const DashboardPage = async () => {
+const DashboardPage = async ({
+  searchParams
+}: {
+  searchParams?: {
+    query?: string;
+  };
+}) => {
   const session = await auth();
   const isPro = await checkSubscription();
   const totalFreeCreations = await getFreeTotalCount();
@@ -71,12 +77,15 @@ const DashboardPage = async () => {
     },
   ];
 
+  const query = searchParams?.query || "";
+  console.log("query", query);
+
   return (
     <section className="w-full h-full bg-slate-100">
-      <h4 className="h2-bold text-center">
+      <h4 className="h2-bold text-center pt-6">
         {session?.user.name}'s <span className="text-[#ff8303]">Dashboard</span>
       </h4>
-      <p className="text-center mt-4 max-w-xl mx-auto">
+      <p className="text-center mt-4 max-w-xl mx-auto px-12">
         Welcome to your dashboard! Here you will be able to view your previous
         voice creations and organize them into a more manageable list.
       </p>
@@ -102,10 +111,12 @@ const DashboardPage = async () => {
         ))}
       </div>
       <Separator orientation="horizontal" className="mt-16 mb-8 w-full" />
+     
+
       <div className="mt-10 px-14">
-           <h4 className="text-left text-2xl font-bold">Saved Voices</h4>
-      <SearchBar />
-      <SavedVoices/>
+        <h4 className="text-left text-2xl font-bold">Saved Voices</h4>
+        <SearchBar />
+        <SavedVoices query={query} audioFiles={audioFiles}/>
       </div>
    
     </section>

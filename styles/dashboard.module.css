@@ -1,0 +1,21 @@
+@keyframes orangeGlow {
+  0% {
+    box-shadow: 0 0 10px 0 rgba(255, 165, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px rgba(255, 165, 0, 0.7), 0 0 30px 20px rgba(255, 165, 0, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 10px 0 rgba(255, 165, 0, 0.5);
+  }
+}
+
+.card {
+  /* Your existing card styles go here */
+
+  /* Set initial box-shadow */
+  box-shadow: 0 0 10px 0 rgba(255, 165, 0, 0.5);
+
+  /* Apply the animation */
+  animation: orangeGlow 2s infinite;
+}
