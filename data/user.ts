@@ -9,7 +9,7 @@ export const getUserByEmail = async (email: string) => {
         email: newEmail,
       },
     });
-    console.log("email in getUSerbyEmail", email);
+    console.log("email in getUserbyEmail", email);
     console.log("user in getUserByEmail", user);
     return user;
   } catch (error) {

@@ -124,7 +124,7 @@ const NavigationBar = () => {
 
   return (
     <nav
-      className="w-full h-20 items-center flex bg-white z-10"
+      className="w-full h-20 items-center flex fixed top-0 bg-white z-[100]"
       style={{ pointerEvents: "all" }}
     >
       <div className="flex justify-between items-center max-w-7xl mx-auto h-full w-full px-4">

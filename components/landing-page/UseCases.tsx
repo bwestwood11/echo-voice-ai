@@ -66,9 +66,9 @@ const UseCases = () => {
     video: string;
   }>(null);
   return (
-    <div className="w-full h-full mt-40">
+    <div className="w-full h-full mt-40 relative">
       <div className="max-w-7xl mx-auto text-center px-6">
-        <h3 className={cn(montserrat.className, "mb-6")}>
+        <h3 className={cn(montserrat.className, "mb-6 font-extrabold text-4xl uppercase")}>
           Real World <span className="text-[#ff8303]">Examples</span> of AI
           Voices
         </h3>

@@ -45,6 +45,7 @@ const Hero = () => {
             }}
           />
         </div>
+        
         <div className="flex lg:flex-row gap-16 lg:gap-4 flex-col max-w-7xl mx-auto px-6" style={{pointerEvents: 'all'}}>
           <div className={cn(montserrat.className, "basis-1/2 lg:px-4 md:px-16")}>
             <h1 className="font-semibold mb-2">

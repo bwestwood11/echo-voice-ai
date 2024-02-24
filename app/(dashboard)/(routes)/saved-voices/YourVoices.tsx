@@ -71,7 +71,7 @@ const YourVoices = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-slate-100">
+    <div className="w-full h-full pb-20 bg-slate-100">
       <h1 className="text-center font-extrabold tracking-wide text-4xl">
         Your Saved <span className="text-[#ff8303]">Audio</span> Files
       </h1>

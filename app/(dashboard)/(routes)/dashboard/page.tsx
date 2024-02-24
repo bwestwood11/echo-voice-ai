@@ -17,6 +17,7 @@ import { checkSubscription } from "@/lib/subscription";
 import { MAX_FREE_CHARACTERS, MAX_PRO_CHARACTERS } from "@/constants";
 import SearchBar from "@/components/search-bar";
 import SavedVoices from "@/components/saved-voices";
+import PaginationControls from "@/components/PaginationControls";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -34,8 +35,10 @@ export const metadata: Metadata = {
 const DashboardPage = async ({
   searchParams
 }: {
-  searchParams?: {
+  searchParams: {
     query?: string;
+    page: string;
+    per_page: string;
   };
 }) => {
   const session = await auth();
@@ -46,6 +49,7 @@ const DashboardPage = async ({
   const totalProCreations = await getProTotalCount();
   const audioFiles = await getAudioFiles();
 
+  
   const stats = [
     {
       title: "Total Voice Creations",
@@ -78,6 +82,8 @@ const DashboardPage = async ({
   ];
 
   const query = searchParams?.query || "";
+  const page = searchParams["page" ] ?? "1"
+  const per_page = searchParams["per_page"] ?? "5"
   console.log("query", query);
 
   return (
@@ -116,7 +122,8 @@ const DashboardPage = async ({
       <div className="mt-10 px-14">
         <h4 className="text-left text-2xl font-bold">Saved Voices</h4>
         <SearchBar />
-        <SavedVoices query={query} audioFiles={audioFiles}/>
+        <SavedVoices query={query} page={page} per_page={per_page} audioFiles={audioFiles}/>
+        <PaginationControls hasNextPage={true} hasPrevPage={true} />
       </div>
    
     </section>

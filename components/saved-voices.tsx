@@ -4,9 +4,13 @@ import { Separator } from "./ui/separator";
 const SavedVoices = ({
   audioFiles,
   query,
+  page,
+  per_page,
 }: {
   audioFiles: Array<any> | false;
   query: string;
+  page: string;
+  per_page: string;
 }) => {
   const filteredAudioFiles = Array.isArray(audioFiles)
     ? audioFiles.filter((audio) => {
@@ -14,13 +18,19 @@ const SavedVoices = ({
       })
     : [];
 
+
+  const start = (Number(page) - 1) * Number(per_page);
+  const end = start + Number(per_page);
+
+  const paginatedAudioFiles = filteredAudioFiles.slice(start, end);
+
   return (
     <div>
-      {filteredAudioFiles.length === 0 && (
+      {paginatedAudioFiles.length === 0 && (
         <p className="mt-4">No audio files found</p>
       )}
       <div className="flex flex-col mt-6">
-        {filteredAudioFiles.map((audio) => (
+        {paginatedAudioFiles.map((audio) => (
           <div key={audio.id} className="flex flex-col">
             <div className="flex space-x-6 items-center">
               <Image
