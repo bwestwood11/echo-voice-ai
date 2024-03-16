@@ -67,6 +67,17 @@ export async function POST(req: Request) {
       },
     });
 
+    const freeDetailsReset = await database.freeCharacterLimit.update({
+      where: {
+        userId: session?.metadata?.userId,
+      },
+      data: {
+        characterCount: 0,
+        count: 0,
+      },
+    });
+
+    
     // if the user's api limit exists, update the count
     if (userApiLimit) {
       await database.proUserCharacterLimit.update({
@@ -74,8 +85,8 @@ export async function POST(req: Request) {
           userId: session?.metadata?.userId,
         },
         data: {
-          characterCount: (userApiLimit.characterCount = 0),
-          count: (userApiLimit.count = 0),
+          characterCount: 0,
+          count: 0,
         },
       });
     }
